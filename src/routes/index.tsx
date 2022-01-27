@@ -1,5 +1,7 @@
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
+
 import { Login } from "../pages/Login";
+import { Route } from "./Route";
 
 export const Routes = () => (
   <Switch>
