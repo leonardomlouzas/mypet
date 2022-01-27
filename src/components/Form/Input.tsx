@@ -17,6 +17,8 @@ interface InputProps extends ChakraInputProps {
   Icon?: IconType;
 }
 
+
+
 const BaseInput: ForwardRefRenderFunction<
   HTMLInputElement,
   InputProps
@@ -28,13 +30,13 @@ const BaseInput: ForwardRefRenderFunction<
       )}
       <InputGroup>
         {Icon && (
-            <InputLeftElement>
+            <InputLeftElement mt="7px">
               <Icon />
             </InputLeftElement>
           )}
-        <ChakraInput { ...rest } ref={ ref }/>
+        <ChakraInput h="55px" bg="gray.200" _focus={ {} } _hover={ {} } { ...rest } ref={ ref }/>
         {error && (
-          <FormErrorMessage>{ error }</FormErrorMessage>
+          <FormErrorMessage color={"red.700"}>{ error }</FormErrorMessage>
         )}
       </InputGroup>
     </FormControl>
