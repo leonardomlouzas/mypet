@@ -26,6 +26,7 @@ interface VaccinesProvidersData {
   getVaccines: (accessToken: string) => Promise<void>;
   registerVaccine: (data: Vaccines, accessToken: string) => Promise<void>;
   editVaccine: (data: Vaccines, accessToken: string) => Promise<void>;
+  removeVaccine: (id: number, accessToken: string) => Promise<void>;
 }
 
 const VaccineContext = createContext<VaccinesProvidersData>(
@@ -76,9 +77,23 @@ const VaccineProvider = ({ children }: VaccineProviderProps) => {
     []
   );
 
+  const removeVaccine = useCallback(async (id: number, accessToken: string) => {
+    await api
+      .delete(`/vaccine/${id}`, {
+        headers: { authorization: `Bearer${accessToken}` },
+      })
+      .catch((err) => console.log("removeVaccine funciont error", err));
+  }, []);
+
   return (
     <VaccineContext.Provider
-      value={{ vaccines, getVaccines, registerVaccine, editVaccine }}
+      value={{
+        vaccines,
+        getVaccines,
+        registerVaccine,
+        editVaccine,
+        removeVaccine,
+      }}
     >
       {children}
     </VaccineContext.Provider>

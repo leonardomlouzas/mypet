@@ -32,6 +32,8 @@ interface PetsContextData {
   pets: Pets[];
   getPets: (accessToekn: string) => Promise<void>;
   registerPets: (data: Pets, accessToken: string) => Promise<void>;
+  editPets: (data: Pets, id: number, accessToken: string) => Promise<void>;
+  removePets: (id: number, accessToken: string) => Promise<void>;
 }
 
 const PetsContext = createContext<PetsContextData>({} as PetsContextData);
@@ -68,8 +70,29 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
       .catch((err) => console.log("registerPets function error", err));
   }, []);
 
+  const editPets = useCallback(
+    async (data: Pets, id: number, accessToken: string) => {
+      await api
+        .patch(`/pets/${id}`, data, {
+          headers: { authorization: `Bearer${accessToken}` },
+        })
+        .catch((err) => console.log("editPets funtion error", err));
+    },
+    []
+  );
+
+  const removePets = useCallback(async (id: number, accessToken: string) => {
+    await api
+      .delete(`/pets/${id}`, {
+        headers: { authorization: `Bearer${accessToken}` },
+      })
+      .catch((err) => console.log("removePets function", err));
+  }, []);
+
   return (
-    <PetsContext.Provider value={{ pets, getPets, registerPets }}>
+    <PetsContext.Provider
+      value={{ pets, getPets, registerPets, editPets, removePets }}
+    >
       {children}
     </PetsContext.Provider>
   );

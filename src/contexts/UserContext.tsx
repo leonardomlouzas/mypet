@@ -13,15 +13,15 @@ interface UserProviderProps {
 }
 
 interface User {
-  email: string;
-  name: string;
-  password: string;
+  email?: string;
+  name?: string;
+  password?: string;
 }
 
 interface UserProviderData {
   user: User[];
   getUser: (accessToken: string) => Promise<void>;
-  changeUser: (data: User, accessToken: string) => Promise<void>;
+  changeUser: (data: User, id: number, accessToken: string) => Promise<void>;
 }
 
 const UserContext = createContext<UserProviderData>({} as UserProviderData);
@@ -45,14 +45,17 @@ const UserProvider = ({ children }: UserProviderProps) => {
       .catch((err) => console.log("getUser function error", err));
   }, []);
 
-  const changeUser = useCallback(async (data: User, accessToken: string) => {
-    await api
-      .patch("/user", data, {
-        headers: { authorization: `Bearer${accessToken}` },
-      })
-      .then((response) => setUser(response.data.user))
-      .catch((err) => console.log("changeUser function error", err));
-  }, []);
+  const changeUser = useCallback(
+    async (data: User, id: number, accessToken: string) => {
+      await api
+        .patch(`/user/${id}`, data, {
+          headers: { authorization: `Bearer${accessToken}` },
+        })
+        .then((response) => setUser(response.data.user))
+        .catch((err) => console.log("changeUser function error", err));
+    },
+    []
+  );
 
   return (
     <UserContext.Provider value={{ user, getUser, changeUser }}>
