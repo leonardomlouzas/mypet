@@ -59,8 +59,8 @@ export const Register = () => {
       justifyContent="space-evenly"
       alignItems="center"
       bgGradient={[
-        "linear(to-t, blue.300 65%, yellow.300 35%)",
-        "linear(to-t, blue.300 65%, yellow.300 35%)",
+        "linear(to-b, blue.300 65%, yellow.300 35%)",
+        "linear(to-b, blue.300 65%, yellow.300 35%)",
         "linear(to-r, blue.300 65%, yellow.300 35%)",
       ]}
     >
