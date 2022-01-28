@@ -6,6 +6,8 @@ import { AuthProvider } from "./AuthContex";
 import { UserProvider } from "./UserContext";
 import { PetsProvider } from "./PetsContext";
 import { VaccineProvider } from "./VaccineContext";
+import { PetShopProvider } from "./PetShopContext";
+import { FoodProvider } from "./FoodContext";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -16,7 +18,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       <UserProvider>
         <PetsProvider>
           <VaccineProvider>
-            <ChakraProvider theme={theme}>{children}</ChakraProvider>
+            <PetShopProvider>
+              <FoodProvider>
+                <ChakraProvider theme={theme}>{children}</ChakraProvider>
+              </FoodProvider>
+            </PetShopProvider>
           </VaccineProvider>
         </PetsProvider>
       </UserProvider>

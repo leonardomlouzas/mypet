@@ -25,7 +25,11 @@ interface VaccinesProvidersData {
   vaccines: Vaccines[];
   getVaccines: (accessToken: string) => Promise<void>;
   registerVaccine: (data: Vaccines, accessToken: string) => Promise<void>;
-  editVaccine: (data: Vaccines, accessToken: string) => Promise<void>;
+  editVaccine: (
+    data: Vaccines,
+    id: number,
+    accessToken: string
+  ) => Promise<void>;
   removeVaccine: (id: number, accessToken: string) => Promise<void>;
 }
 
@@ -67,9 +71,9 @@ const VaccineProvider = ({ children }: VaccineProviderProps) => {
   );
 
   const editVaccine = useCallback(
-    async (data: Vaccines, accessToken: string) => {
+    async (data: Vaccines, id: number, accessToken: string) => {
       await api
-        .patch("/vaccines", data, {
+        .patch(`/vaccine/${id}`, data, {
           headers: { authorization: `Bearer${accessToken}` },
         })
         .catch((err) => console.log("editVaccine function error", err));

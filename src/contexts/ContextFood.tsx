@@ -13,11 +13,11 @@ interface FoodProviderProps {
 }
 
 interface Food {
-  item: string;
-  price: number;
-  quantity: string;
-  frequency: string;
-  details: string;
+  item?: string;
+  price?: number;
+  quantity?: string;
+  frequency?: string;
+  details?: string;
   petId: number;
   userId: number;
 }

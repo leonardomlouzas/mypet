@@ -25,8 +25,12 @@ interface PetShopProviderData {
   petShop: PetShop[];
   getPetShop: (accesToken: string) => Promise<void>;
   registerPetShop: (data: PetShop, accessToken: string) => Promise<void>;
-  editPetShop: (data: PetShop, accessToken: string) => Promise<void>;
-  deletePetShop: (accessToken: string) => Promise<void>;
+  editPetShop: (
+    data: PetShop,
+    id: number,
+    accessToken: string
+  ) => Promise<void>;
+  deletePetShop: (id: number, accessToken: string) => Promise<void>;
 }
 
 const PetShopContext = createContext<PetShopProviderData>(
@@ -62,17 +66,19 @@ const PetShopProvider = ({ children }: PetShopProviderProps) => {
   );
 
   const editPetShop = useCallback(
-    async (data: PetShop, accessToken: string) => {
+    async (data: PetShop, id: number, accessToken: string) => {
       await api
-        .patch("/petShop", data, { headers: { auth: `Bearer${accessToken}` } })
+        .patch(`/petShop/${id}`, data, {
+          headers: { auth: `Bearer${accessToken}` },
+        })
         .catch((err) => console.log("editPetShop function error", err));
     },
     []
   );
 
-  const deletePetShop = useCallback(async (accessToken: string) => {
+  const deletePetShop = useCallback(async (id: number, accessToken: string) => {
     await api
-      .delete("/petShop", { headers: { auth: `Bearer${accessToken}` } })
+      .delete(`/petShop/${id}`, { headers: { auth: `Bearer${accessToken}` } })
       .catch((err) => console.log("deletePetShop function error", err));
   }, []);
 
@@ -90,3 +96,5 @@ const PetShopProvider = ({ children }: PetShopProviderProps) => {
     </PetShopContext.Provider>
   );
 };
+
+export { PetShopProvider, usePetShop };
