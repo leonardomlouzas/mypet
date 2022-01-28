@@ -22,8 +22,8 @@ const BaseInput: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   ref
 ) => {
   const [inputBorder, setInputBorder] = useState("gray.200");
-  const [checkInput, setCheckInput] = useState<boolean>(false);
   const [colorIcon, setColorIcon] = useState("gray.900");
+  const [checkInput, setCheckInput] = useState<boolean>(false);
 
   useEffect(() => {
     if (error) {
@@ -37,7 +37,7 @@ const BaseInput: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
 
   return (
     <FormControl isInvalid={!!error}>
-      {label && <FormLabel>{label}</FormLabel>}
+      {label && <FormLabel m="0">{label}</FormLabel>}
       <InputGroup>
         {Icon && (
           <InputLeftElement color={ colorIcon } mt="7px">

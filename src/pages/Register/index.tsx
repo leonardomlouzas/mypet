@@ -4,44 +4,48 @@ import {
   Flex,
   Heading,
   Image,
+  Link,
   Text,
   VStack,
-  Link,
 } from "@chakra-ui/react";
-import { Link as DomLink } from "react-router-dom";
-import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { Link as DomLink } from "react-router-dom";
+import { FaUserAlt, FaLock } from "react-icons/fa";
 
 import Logo from "../../assets/Logo.svg";
 import { Input } from "../../components/Form/Input";
 
-interface FormLoginData {
+interface FormRegisterData {
+  name: string;
   email: string;
   password: string;
+  confirm_password: string;
 }
 
-
-
-export const Login = () => {
-  const schemaLogin = yup.object().shape({
+export const Register = () => {
+  const schemaRegister = yup.object().shape({
+    name: yup.string().required("* Campo obrigatório"),
     email: yup
       .string()
       .required("* Campo obrigatório")
       .email("* E-mail Inválido"),
     password: yup.string().required("* Campo obrigatório"),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref("password")], "Senhas diferentes"),
   });
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormLoginData>({
-    resolver: yupResolver(schemaLogin),
+  } = useForm<FormRegisterData>({
+    resolver: yupResolver(schemaRegister),
   });
 
-  const hundleLogin = (data: FormLoginData) => {
+  const hundleRegister = (data: FormRegisterData) => {
     console.log(data);
   };
 
@@ -53,7 +57,7 @@ export const Login = () => {
       padding={["25px 5px", "25px 10px", "20px 0"]}
       flexDirection={["column", "column", "row"]}
       justifyContent="space-evenly"
-      align="center"
+      alignItems="center"
       bgGradient={[
         "linear(to-t, blue.300 65%, yellow.300 35%)",
         "linear(to-t, blue.300 65%, yellow.300 35%)",
@@ -61,8 +65,7 @@ export const Login = () => {
       ]}
     >
       <Flex
-        align="stretch"
-        w={["80%", "70%", "30%"]}
+        w={["80%", "70%", "40%", "30%"]}
         mb={["25px", "25px", "0"]}
         flexDirection={["column", "column", "row"]}
         alignItems="center"
@@ -89,9 +92,9 @@ export const Login = () => {
       </Flex>
       <Flex
         as="form"
-        onSubmit={ handleSubmit(hundleLogin) }
+        onSubmit={handleSubmit(hundleRegister)}
         action="post"
-        w={["90%", "70%", "40%", "35%"]}
+        w={["90%", "70%", "45%", "35%"]}
         bg="white"
         flexDirection="column"
         alignItems="center"
@@ -99,12 +102,20 @@ export const Login = () => {
         borderRadius="10px"
       >
         <Heading as="h1" textAlign="center" mb="20px" fontWeight="normal">
-          Login
+          Registro
         </Heading>
         <VStack w="100%" spacing="20px">
           <Input
             Icon={FaUserAlt}
             type="text"
+            label="Nome"
+            placeholder="Digite o nome"
+            error={errors.name}
+            {...register("name")}
+          />
+          <Input
+            Icon={FaUserAlt}
+            type="email"
             label="E-mail"
             placeholder="exemplo@exemplo.com"
             error={errors.email}
@@ -118,30 +129,32 @@ export const Login = () => {
             error={errors.password}
             {...register("password")}
           />
+          <Input
+            Icon={FaLock}
+            type="password"
+            label="Confirme a Senha"
+            placeholder="******"
+            error={errors.confirm_password}
+            {...register("confirm_password")}
+          />
         </VStack>
         <Button
           type="submit"
-          bg="yellow.500"
+          bg="blue.500"
           padding="25px"
           color="white"
           mt="35px"
           fontSize="xl"
           w="60%"
           _hover={{
-            bg: "yellow.300",
+            bg: "blue.300",
           }}
         >
-          Logar
+          Cadastrar
         </Button>
-        <Text mt="30px" fontSize="lg">
-          Ainda não possui conta?{" "}
-          <Link
-            as={DomLink}
-            to="/register"
-            fontSize="md"
-            _hover={{}}
-            color="gray.400"
-          >
+        <Text mt="15px" fontSize="lg">
+          Já possui conta?{" "}
+          <Link as={DomLink} to="/" fontSize="md" _hover={{}} color="gray.400">
             Clique aqui
           </Link>{" "}
         </Text>
