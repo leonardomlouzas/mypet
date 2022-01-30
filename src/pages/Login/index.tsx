@@ -17,12 +17,16 @@ import * as yup from "yup";
 import Logo from "../../assets/Logo.svg";
 import { Input } from "../../components/Form/Input";
 
+import { useAuth } from "../../contexts/ContextAuth";
+
 interface FormLoginData {
   email: string;
   password: string;
 }
 
 export const Login = () => {
+  const { signIn } = useAuth();
+
   const schemaLogin = yup.object().shape({
     email: yup
       .string()
@@ -40,6 +44,8 @@ export const Login = () => {
   });
 
   const hundleLogin = (data: FormLoginData) => {
+    signIn(data);
+
     console.log(data);
   };
 

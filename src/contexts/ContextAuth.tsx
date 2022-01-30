@@ -73,8 +73,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const signIn = useCallback(async ({ email, password }: SignInCredential) => {
     const response = await api.post("/login", { email, password });
     const { accessToken, user } = response.data;
+    localStorage.setItem("@MyPets:acessToken", accessToken);
+    localStorage.setItem("@MyPets:user", JSON.stringify(user));
 
     setUserData({ accessToken, user });
+    history.push("/dashboard");
   }, []);
 
   const signOut = useCallback(() => {
