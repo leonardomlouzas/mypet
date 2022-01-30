@@ -18,7 +18,6 @@ import Logo from "../../assets/Logo.svg";
 import { Input } from "../../components/Form/Input";
 
 import { useAuth } from "../../contexts/ContextAuth";
-
 interface FormLoginData {
   email: string;
   password: string;

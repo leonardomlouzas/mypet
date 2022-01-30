@@ -53,10 +53,9 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
   const getPets = useCallback(async (accessToken: string) => {
     await api
       .get("/pets", {
-        headers: { authorization: `Bearer${accessToken}` },
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .then((response) => {
-        console.log(response.data);
         setPets(response.data);
       })
       .catch((err) => console.log("getPets function error", err));
@@ -65,7 +64,7 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
   const registerPets = useCallback(async (data: Pets, accessToken: string) => {
     await api
       .post("/pets", {
-        headers: { authorization: `Bearer${accessToken}` },
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .catch((err) => console.log("registerPets function error", err));
   }, []);
@@ -74,7 +73,7 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
     async (data: Pets, id: number, accessToken: string) => {
       await api
         .patch(`/pets/${id}`, data, {
-          headers: { authorization: `Bearer${accessToken}` },
+          headers: { authorization: `Bearer ${accessToken}` },
         })
         .catch((err) => console.log("editPets funtion error", err));
     },
@@ -84,7 +83,7 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
   const removePets = useCallback(async (id: number, accessToken: string) => {
     await api
       .delete(`/pets/${id}`, {
-        headers: { authorization: `Bearer${accessToken}` },
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .catch((err) => console.log("removePets function", err));
   }, []);
