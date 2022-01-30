@@ -1,4 +1,6 @@
-import { Flex, Icon, Box, Heading, Text } from "@chakra-ui/react";
+import { Flex, Image, Icon, Box, Heading, Text } from "@chakra-ui/react";
+import { FaEdit } from "react-icons/fa";
+import VaccineIcon from "../../assets/syringe-solid.svg";
 
 interface VaccineCardProps {
   vaccineName: string;
@@ -13,17 +15,18 @@ export const CardVaccine = ({
 }: VaccineCardProps) => {
   return (
     <Flex direction="row" p="5" h="80px" w="80%">
-      <Icon w="50" h="48" alt="teste" />
-      <Flex w="80%">
+      <Image src={VaccineIcon} w="50" h="48" alt="teste" />
+      <Flex w="80%" justify="space-between">
         <Box>
-          <Heading>{vaccineName}</Heading>
+          <Heading as="h4" size="sm">
+            {vaccineName}
+          </Heading>
           <Text>{vaccineData}</Text>
         </Box>
         <Box>
-          <Icon w="20px" h="20px" />
+          <Icon as={FaEdit} w="20px" h="20px" />
           <Text>{vaccineExpiration} meses</Text>
         </Box>
-        11
       </Flex>
     </Flex>
   );
