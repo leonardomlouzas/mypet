@@ -8,7 +8,7 @@ interface CardPetProps {
   petAge: number;
 }
 
-export const CardPet = ({
+export const CardPets = ({
   petImage,
   petName,
   petSpecie,
@@ -20,6 +20,10 @@ export const CardPet = ({
       align="center"
       justify="center"
       borderRadius="20px"
+      border="1px"
+      w="200px"
+      m="10px"
+      p="5"
     >
       <Image
         src={petImage}
@@ -30,16 +34,24 @@ export const CardPet = ({
         border="1px"
         borderColor="yellow.200"
       />
-      <Flex>
+      <Flex mb="15px" mt="15px">
         <Heading as="h3" size="md">
           {petName}Icon
         </Heading>
       </Flex>
-      <Flex direction="column" align="left" justify="left">
-        <Badge bg="yellow.200">{petSpecie}</Badge>
+      <Flex
+        direction="column"
+        align="start"
+        justify="center"
+        mb="15px"
+        w="100%"
+      >
+        <Badge bg="yellow.200" mb="5px">
+          {petSpecie}
+        </Badge>
         <Text>{petAge}</Text>
-        <Botao content="Entrar" />
       </Flex>
+      <Botao content="Entrar" />
     </Flex>
   );
 };
