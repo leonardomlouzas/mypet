@@ -2,12 +2,12 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { theme } from "../styles/theme";
 
-import { AuthProvider } from "./AuthContex";
-import { UserProvider } from "./UserContext";
-import { PetsProvider } from "./PetsContext";
-import { VaccineProvider } from "./VaccineContext";
-import { PetShopProvider } from "./PetShopContext";
-import { FoodProvider } from "./FoodContext";
+import { AuthProvider } from "./ContextAuth";
+import { UserProvider } from "./ContextUser";
+import { PetsProvider } from "./ContextPets";
+import { VaccineProvider } from "./ContextVaccines";
+import { PetShopProvider } from "./ContextPetShop";
+import { FoodProvider } from "./ContextFood";
 
 interface AppProviderProps {
   children: ReactNode;
