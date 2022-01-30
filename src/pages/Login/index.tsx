@@ -22,8 +22,6 @@ interface FormLoginData {
   password: string;
 }
 
-
-
 export const Login = () => {
   const schemaLogin = yup.object().shape({
     email: yup
@@ -89,7 +87,7 @@ export const Login = () => {
       </Flex>
       <Flex
         as="form"
-        onSubmit={ handleSubmit(hundleLogin) }
+        onSubmit={handleSubmit(hundleLogin)}
         action="post"
         w={["90%", "70%", "40%", "35%"]}
         bg="white"
