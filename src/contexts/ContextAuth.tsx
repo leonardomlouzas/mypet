@@ -42,7 +42,7 @@ interface AuthContextData {
   user: User;
   signIn: (credenteials: SignInCredential) => Promise<void>;
   signOut: () => void;
-  register: (credential: RegisterCredential) => Promise<void>;
+  registerUser: (credential: RegisterCredential) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -88,7 +88,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const register = useCallback(async (data: RegisterCredential) => {
+  const registerUser = useCallback(async (data: RegisterCredential) => {
     await api.post("/register", data).catch((err) => console.log(err));
     history.push("/");
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,7 +101,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         user: userData.user,
         signIn,
         signOut,
-        register,
+        registerUser,
       }}
     >
       {children}

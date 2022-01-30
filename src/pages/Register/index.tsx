@@ -17,6 +17,8 @@ import { FaUserAlt, FaLock } from "react-icons/fa";
 import Logo from "../../assets/Logo.svg";
 import { Input } from "../../components/Form/Input";
 
+import { useAuth } from "../../contexts/ContextAuth";
+
 interface FormRegisterData {
   name: string;
   email: string;
@@ -25,6 +27,8 @@ interface FormRegisterData {
 }
 
 export const Register = () => {
+  const { registerUser } = useAuth();
+
   const schemaRegister = yup.object().shape({
     name: yup.string().required("* Campo obrigatório"),
     email: yup
@@ -46,7 +50,7 @@ export const Register = () => {
   });
 
   const hundleRegister = (data: FormRegisterData) => {
-    console.log(data);
+    registerUser(data);
   };
 
   return (

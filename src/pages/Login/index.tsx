@@ -45,8 +45,6 @@ export const Login = () => {
 
   const hundleLogin = (data: FormLoginData) => {
     signIn(data);
-
-    console.log(data);
   };
 
   return (
