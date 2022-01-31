@@ -1,5 +1,7 @@
 import { Flex, Image, Heading, Badge, Text } from "@chakra-ui/react";
 import { Botao } from "../Button";
+import VenusIcon from "../../assets/venus-solid.svg";
+import MarsIcon from "../../assets/mars-solid.svg";
 
 interface CardPetProps {
   petImage: string;
@@ -24,6 +26,7 @@ export const CardPets = ({
       w="200px"
       m="10px"
       p="5"
+      bg="gray.200"
     >
       <Image
         src={petImage}
@@ -36,8 +39,9 @@ export const CardPets = ({
       />
       <Flex mb="15px" mt="15px">
         <Heading as="h3" size="md">
-          {petName}Icon
+          {petName}
         </Heading>
+        <Image src={VenusIcon} w="30px" h="30px" />
       </Flex>
       <Flex
         direction="column"
@@ -49,7 +53,7 @@ export const CardPets = ({
         <Badge bg="yellow.200" mb="5px">
           {petSpecie}
         </Badge>
-        <Text>{petAge}</Text>
+        <Text>{petAge} anos</Text>
       </Flex>
       <Botao content="Entrar" />
     </Flex>

@@ -18,8 +18,8 @@ interface Feed {
 }
 
 interface Pets {
-  image_url: string;
-  name: string;
+  img_url: string;
+  nome: string;
   specie: string;
   race: string;
   age: number;
@@ -30,7 +30,7 @@ interface Pets {
 
 interface PetsContextData {
   pets: Pets[];
-  getPets: (accessToekn: string) => Promise<void>;
+  getPets: (accessToekn: string, userId: number) => Promise<void>;
   registerPets: (data: Pets, accessToken: string) => Promise<void>;
   editPets: (data: Pets, id: number, accessToken: string) => Promise<void>;
   removePets: (id: number, accessToken: string) => Promise<void>;
@@ -50,9 +50,9 @@ const usePets = () => {
 const PetsProvider = ({ children }: PetsProviderProps) => {
   const [pets, setPets] = useState<Pets[]>([]);
 
-  const getPets = useCallback(async (accessToken: string) => {
+  const getPets = useCallback(async (accessToken: string, userId: number) => {
     await api
-      .get("/pets", {
+      .get(`/users/${userId}/pets`, {
         headers: { authorization: `Bearer ${accessToken}` },
       })
       .then((response) => {
