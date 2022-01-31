@@ -1,20 +1,18 @@
-import { Flex, Image } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import Bowl from "../../assets/bowl-solid.svg";
 
-export const CardFeed = () => {
+interface FeedProps {
+  frequency: string;
+  time: number;
+}
+export const CardFeed = ({ frequency, time }: FeedProps) => {
   return (
-    <Flex
-      backgroundColor="red"
-      width="100%"
-      padding="15px"
-      justifyContent="space-around"
-    >
+    <Flex backgroundColor="white" width="100%" padding="15px" gap="15px">
       <Image src={Bowl} />
       <Flex flexDirection="column">
-        <p>Frequência</p>
-        <p>Horário</p>
+        <Text fontWeight="bold">{frequency}</Text>
+        <Text>{time}</Text>
       </Flex>
-      <p>Vezes/Dia</p>
     </Flex>
   );
 };
