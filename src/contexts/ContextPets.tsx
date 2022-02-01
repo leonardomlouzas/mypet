@@ -30,6 +30,8 @@ interface Pets {
 
 interface PetsContextData {
   pets: Pets[];
+  selectedPet: Pets[];
+  setSelectedPet: React.Dispatch<React.SetStateAction<Pets[]>>;
   getPets: (accessToekn: string, userId: number) => Promise<void>;
   registerPets: (data: Pets, accessToken: string) => Promise<void>;
   editPets: (data: Pets, id: number, accessToken: string) => Promise<void>;
@@ -49,6 +51,7 @@ const usePets = () => {
 
 const PetsProvider = ({ children }: PetsProviderProps) => {
   const [pets, setPets] = useState<Pets[]>([]);
+  const [selectedPet, setSelectedPet] = useState<Pets[]>([]);
 
   const getPets = useCallback(async (accessToken: string, userId: number) => {
     await api
@@ -90,7 +93,15 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
 
   return (
     <PetsContext.Provider
-      value={{ pets, getPets, registerPets, editPets, removePets }}
+      value={{
+        pets,
+        selectedPet,
+        setSelectedPet,
+        getPets,
+        registerPets,
+        editPets,
+        removePets,
+      }}
     >
       {children}
     </PetsContext.Provider>
