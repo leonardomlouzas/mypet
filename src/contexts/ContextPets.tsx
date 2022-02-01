@@ -30,6 +30,8 @@ interface Pets {
 
 interface PetsContextData {
   pets: Pets[];
+  pet: Pets;
+  getPet: (id: number, token: string) => void;
   getPets: (accessToekn: string, userId: number) => Promise<void>;
   registerPets: (data: Pets, accessToken: string) => Promise<void>;
   editPets: (data: Pets, id: number, accessToken: string) => Promise<void>;
@@ -49,6 +51,15 @@ const usePets = () => {
 
 const PetsProvider = ({ children }: PetsProviderProps) => {
   const [pets, setPets] = useState<Pets[]>([]);
+  const [pet, setPet] = useState<Pets>({} as Pets);
+
+  const getPet = useCallback(async (id: number, token: string) => {
+    await api.get(`/pets/${id}`, {
+      headers: { authorization: `Bearer ${token}` },
+    }).then(response => {
+      setPet(response.data);
+    });
+  }, []);
 
   const getPets = useCallback(async (accessToken: string, userId: number) => {
     await api
@@ -90,7 +101,7 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
 
   return (
     <PetsContext.Provider
-      value={{ pets, getPets, registerPets, editPets, removePets }}
+      value={{ pet, pets, getPet, getPets, registerPets, editPets, removePets }}
     >
       {children}
     </PetsContext.Provider>
