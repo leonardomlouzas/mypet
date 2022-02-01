@@ -9,7 +9,7 @@ export const Header = ({}) => {
   return (
     <Flex
       w="100vw"
-      h="10vh"
+      h={["13vh", "13vh", "10vh"]}
       bg="yellow.200"
       align="center"
       justifyContent="center"
