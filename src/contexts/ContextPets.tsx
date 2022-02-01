@@ -31,7 +31,7 @@ interface Pets {
 interface PetsContextData {
   pets: Pets[];
   pet: Pets;
-  getPet: (id: number, token: string) => void;
+  getPet: (id: number, token: string) => Promise<void>;
   getPets: (accessToekn: string, userId: number) => Promise<void>;
   registerPets: (data: Pets, accessToken: string) => Promise<void>;
   editPets: (data: Pets, id: number, accessToken: string) => Promise<void>;

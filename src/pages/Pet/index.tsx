@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 import BgImage from "../../assets/background.png";
 import { Header } from "../../components/Header";
@@ -33,7 +34,9 @@ export const Pet = () => {
 
   useEffect(() => {
     if (id) {
-      getPet(id, accessToken);
+      getPet(id, accessToken).catch(() => {
+        history.push("/dashboard");
+      });
     } else {
       history.push("/dashboard");
     }
@@ -48,10 +51,7 @@ export const Pet = () => {
         justifyContent={["stretch", "stretch", "center"]}
         alignItems={["stretch", "stretch", "center"]}
       >
-        <Box
-          w={["100%", "100%", "60%"]}
-          bgColor="gray.200"
-        >
+        <Box w={["100%", "100%", "60%"]} bgColor="gray.200">
           <Flex
             w="100%"
             justifyContent={["space-evenly", "space-evenly", "start"]}
@@ -59,7 +59,20 @@ export const Pet = () => {
             padding="25px"
             borderBottom="3px solid"
             borderBottomColor="gray.400"
+            position="relative"
           >
+            <Center
+              position="absolute"
+              top="10px"
+              right="10px"
+              fontSize="3xl"
+              cursor="pointer"
+              onClick={ () => {
+                history.push("/dashboard");
+              }}
+            >
+              <FaArrowAltCircleLeft />
+            </Center>
             <Image
               src={pet.img_url}
               w={["100px", "100px", "150px"]}

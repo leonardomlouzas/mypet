@@ -9,11 +9,13 @@ import { usePets } from "../../contexts/ContextPets";
 import { useEffect } from "react";
 
 export const Dashboard = () => {
-  const { accessToken, user } = useAuth();
+  const { accessToken, user, signOut } = useAuth();
   const { pets, getPets } = usePets();
 
   useEffect(() => {
-    getPets(accessToken, user.id);
+    getPets(accessToken, user.id).catch(() => {
+      signOut();
+    });
   }, []);
 
   return (
