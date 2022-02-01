@@ -22,11 +22,8 @@ export const Dashboard = () => {
       <Flex align="center" justify="center" mt="5">
         {pets.map((pet, index) => (
           <CardPets
-            key={index}
-            petImage={pet.img_url}
-            petName={pet.nome}
-            petSpecie={pet.specie}
-            petAge={pet.age}
+            key={ index }
+            pet={ pet }
           />
         ))}
       </Flex>
