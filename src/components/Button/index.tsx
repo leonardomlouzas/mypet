@@ -1,10 +1,10 @@
-import { Button } from "@chakra-ui/react";
+import { Button, ButtonProps } from "@chakra-ui/react";
 
-interface BotaoProps {
+interface BotaoProps extends ButtonProps{
   content: string;
 }
-export const Botao = ({ content }: BotaoProps) => (
-  <Button backgroundColor="" color="">
+export const Botao = ({ content, ...rest }: BotaoProps) => (
+  <Button { ...rest } >
     {content}
   </Button>
 );

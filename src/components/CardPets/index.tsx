@@ -1,21 +1,33 @@
 import { Flex, Image, Heading, Badge, Text } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+
 import { Botao } from "../Button";
 import VenusIcon from "../../assets/venus-solid.svg";
 import MarsIcon from "../../assets/mars-solid.svg";
 
 interface CardPetProps {
-  petImage: string;
-  petName: string;
-  petSpecie: string;
-  petAge: number;
+  pet: Pets;
+}
+interface Feed {
+  frequency?: string;
+  time?: number;
+}
+interface Pets {
+  img_url: string;
+  nome: string;
+  specie: string;
+  race: string;
+  age: number;
+  userId: number;
+  feed?: Feed;
+  id: number;
 }
 
-export const CardPets = ({
-  petImage,
-  petName,
-  petSpecie,
-  petAge,
-}: CardPetProps) => {
+
+
+export const CardPets = ({ pet }: CardPetProps) => {
+  const history = useHistory();
+
   return (
     <Flex
       direction="column"
@@ -29,8 +41,8 @@ export const CardPets = ({
       bg="gray.200"
     >
       <Image
-        src={petImage}
-        alt={petName}
+        src={ pet.img_url }
+        alt={ pet.nome }
         h="90px"
         w="90px"
         borderRadius="50%"
@@ -39,7 +51,7 @@ export const CardPets = ({
       />
       <Flex mb="15px" mt="15px">
         <Heading as="h3" size="md">
-          {petName}
+          { pet.nome }
         </Heading>
         <Image src={VenusIcon} w="30px" h="30px" />
       </Flex>
@@ -51,11 +63,16 @@ export const CardPets = ({
         w="100%"
       >
         <Badge bg="yellow.200" mb="5px">
-          {petSpecie}
+          { pet.specie }
         </Badge>
-        <Text>{petAge} anos</Text>
+        <Text>{ pet.age } anos</Text>
       </Flex>
-      <Botao content="Entrar" />
+      <Botao
+        content="Entrar"
+        onClick={() => {
+          history.push(`/pet/${ pet.id }`);
+        }}
+      />
     </Flex>
   );
 };

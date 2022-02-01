@@ -9,7 +9,7 @@ export const Header = ({}) => {
   return (
     <Flex
       w="100vw"
-      h="70px"
+      h="10vh"
       bg="yellow.200"
       align="center"
       justifyContent="center"
@@ -21,7 +21,7 @@ export const Header = ({}) => {
             MyPets
           </Heading>
         </Flex>
-        <Image src={SignOutIcon} w="40px" h="40px" onClick={signOut} />
+        <Image src={SignOutIcon} w="40px" h="40px" onClick={signOut} cursor="pointer" />
       </Flex>
     </Flex>
   );
