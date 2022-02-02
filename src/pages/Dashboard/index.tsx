@@ -7,6 +7,7 @@ import { useAuth } from "../../contexts/ContextAuth";
 import { usePets } from "../../contexts/ContextPets";
 
 import { useEffect } from "react";
+import { ModalPetshop } from "../../components/ModalPetShop";
 
 export const Dashboard = () => {
   const { accessToken, user } = useAuth();
@@ -30,6 +31,7 @@ export const Dashboard = () => {
           />
         ))}
       </Flex>
+      <ModalPetshop />
     </Box>
   );
 };
