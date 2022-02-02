@@ -8,25 +8,35 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  RadioGroup,
-  HStack,
-  Radio,
   VStack,
-  Text,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Input } from "../Form/Input";
-
+import { useAuth } from "../../contexts/ContextAuth";
+import { useVaccine } from "../../contexts/ContextVaccines";
 interface FormEditData {
   vaccine_name: string;
   date: Date;
   expiration: Date;
   price: number;
 }
+
+interface Vaccines {
+  vaccine_name?: string;
+  date?: string;
+  expiration?: string;
+  price?: number;
+  petId?: number;
+  status: boolean;
+}
+
 export const ModalVaccine = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { user, accessToken } = useAuth();
+  const { editVaccine, removeVaccine } = useVaccine();
 
   const schemaEdit = yup.object().shape({
     vaccine_name: yup.string().required(),
@@ -43,8 +53,25 @@ export const ModalVaccine = () => {
     resolver: yupResolver(schemaEdit),
   });
 
-  const handleEdit = (data: FormEditData) => {
-    console.log(data);
+  const handleEdit = ({
+    vaccine_name,
+    date,
+    expiration,
+    price,
+  }: FormEditData) => {
+    const newVaccine = {
+      vaccine_name: vaccine_name,
+      date: JSON.stringify(date),
+      expiration: JSON.stringify(expiration),
+      price: price,
+      status: false,
+    };
+
+    editVaccine(newVaccine as Vaccines, 2, accessToken);
+  };
+
+  const handleDelete = (id: number) => {
+    removeVaccine(id, accessToken);
   };
 
   return (
@@ -97,7 +124,7 @@ export const ModalVaccine = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => console.log("confirmado")}>Deletar</Button>
+            <Button onClick={() => handleDelete(4)}>Deletar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
