@@ -1,6 +1,7 @@
 import { useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 
+import { CardPetOpen } from "../../components/CardPetOpen";
 import { CardFood } from "../../components/Food";
 import { CardPetshop } from "../../components/CardPetShop";
 import { CardFeed } from "../../components/CardFeed";
@@ -19,10 +20,6 @@ export const Dashboard = () => {
 
   const handler = (id: number, name: string) => {
     setOpenPet(true);
-    setFoodOpen(false);
-    setFeedOpen(false);
-    setPetShopOpen(false);
-    setVaccineOpen(true);
     setPetId(id);
     setPetName(name);
     console.log("funcionou");
@@ -65,6 +62,15 @@ export const Dashboard = () => {
             petId={petId}
             petName={petName}
             closeVaccine={backButton}
+          />
+        ) : openPet ? (
+          <CardPetOpen
+            petId={petId}
+            returnToDesktop={() => setOpenPet(false)}
+            enterVaccine={() => setVaccineOpen(true)}
+            enterPetShop={() => setPetShopOpen(true)}
+            enterFeed={() => setFeedOpen(true)}
+            enterFood={() => setFoodOpen(true)}
           />
         ) : (
           <CardPets mobile={!isLargerThan480} open={handler} />

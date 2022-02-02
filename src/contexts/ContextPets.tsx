@@ -90,7 +90,13 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
 
   return (
     <PetsContext.Provider
-      value={{ pets, getPets, registerPets, editPets, removePets }}
+      value={{
+        pets,
+        getPets,
+        registerPets,
+        editPets,
+        removePets,
+      }}
     >
       {children}
     </PetsContext.Provider>
