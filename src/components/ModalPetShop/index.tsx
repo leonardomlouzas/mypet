@@ -12,22 +12,37 @@ import {
   HStack,
   Radio,
   VStack,
-  TagLabel,
-  Flex,
   Text,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Input } from "../Form/Input";
+import { usePetShop } from "../../contexts/ContextPetShop";
+import { useAuth } from "../../contexts/ContextAuth";
 interface FormEditData {
   service: string;
   date: Date;
   price: number;
   frequency: string;
 }
+
+interface PetShop {
+  service?: string;
+  petName?: number;
+  price?: number;
+  date?: string;
+  frequency?: string;
+  userId: number;
+  status: boolean;
+}
+
 export const ModalPetshop = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { user, accessToken } = useAuth();
+
+  const { editPetShop, deletePetShop } = usePetShop();
 
   const schemaEdit = yup.object().shape({
     service: yup.string().required(),
@@ -44,8 +59,20 @@ export const ModalPetshop = () => {
     resolver: yupResolver(schemaEdit),
   });
 
-  const handleEdit = (data: FormEditData) => {
-    console.log(data);
+  const handleEdit = ({ service, date, price, frequency }: FormEditData) => {
+    const newPetShop = {
+      service: service,
+      date: JSON.stringify(date),
+      price: price,
+      frequency: frequency,
+      status: true,
+    };
+    const id = 2;
+    editPetShop(newPetShop as PetShop, id, accessToken);
+  };
+
+  const handleDelete = (id: number) => {
+    deletePetShop(id, accessToken);
   };
 
   return (
@@ -105,7 +132,7 @@ export const ModalPetshop = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => console.log("confirmado")}>Deletar</Button>
+            <Button onClick={() => handleDelete(2)}>Deletar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
