@@ -8,31 +8,47 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  RadioGroup,
-  HStack,
-  Radio,
   VStack,
-  Text,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { usePets } from "../../contexts/ContextPets";
+import { useAuth } from "../../contexts/ContextAuth";
 import { Input } from "../Form/Input";
 
 interface FormEditData {
-  name: string;
+  nome: string;
   specie: string;
-  age: Date;
+  age: number;
   img_url: string;
 }
 
+interface Feed {
+  frequency?: string;
+  time?: number;
+}
+
+interface Pets {
+  img_url: string;
+  nome: string;
+  specie: string;
+  race: string;
+  age: number;
+  userId: number;
+  feed?: Feed;
+  id: number;
+}
 export const ModalPet = () => {
+  const { registerPets, removePets } = usePets();
+  const { accessToken, user } = useAuth();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const schemaEdit = yup.object().shape({
-    name: yup.string().required(),
+    nome: yup.string().required(),
     specie: yup.string().required(),
-    age: yup.date().required(),
+    age: yup.number().required(),
     img_url: yup.string().required(),
   });
 
@@ -44,10 +60,23 @@ export const ModalPet = () => {
     resolver: yupResolver(schemaEdit),
   });
 
-  const handleEdit = (data: FormEditData) => {
-    console.log(data);
+  const handleEdit = ({ nome, specie, age, img_url }: FormEditData) => {
+    const newPet = {
+      nome: nome,
+      specie: specie,
+      age: age,
+      img_url: img_url,
+      userId: user.id,
+      feed: {},
+    };
+    console.log(JSON.stringify(newPet));
+    console.log(accessToken);
+    registerPets(newPet as Pets, accessToken);
   };
 
+  const handleDelete = (id: number) => {
+    removePets(id, accessToken);
+  };
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
@@ -67,8 +96,8 @@ export const ModalPet = () => {
               <Input
                 label="Nome"
                 placeholder="Ex: PLuto"
-                {...register("name")}
-                error={errors.name}
+                {...register("nome")}
+                error={errors.nome}
               />
 
               <Input
@@ -78,7 +107,7 @@ export const ModalPet = () => {
                 error={errors.specie}
               />
               <Input
-                type="date"
+                type="number"
                 label="Data de nascimento"
                 {...register("age")}
                 error={errors.age}
@@ -95,7 +124,7 @@ export const ModalPet = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => console.log("confirmado")}>Deletar</Button>
+            <Button onClick={() => handleDelete(5)}>Deletar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
