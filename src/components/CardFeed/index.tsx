@@ -70,6 +70,7 @@ export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
                     p="5"
                     w="100%"
                     justify="space-evenly"
+                    onClick={() => console.log("editFeed")}
                   >
                     <Image src={Bowl} w="35px" h="35px" mr="15px" />
                     <Box>
@@ -105,6 +106,7 @@ export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
                   p="5"
                   borderBottom="1px"
                   w="100%"
+                  onClick={() => console.log("editFeed")}
                 >
                   <Image src={Bowl} w="35px" h="35px" mr="15px" />
                   <Box>

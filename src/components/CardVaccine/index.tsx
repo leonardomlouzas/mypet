@@ -22,8 +22,8 @@ export const CardVaccine = ({
   mobile,
   closeVaccine,
 }: VaccineCardProps) => {
-  const { accessToken, user } = useAuth();
-  const { pets, getPets } = usePets();
+  const { accessToken } = useAuth();
+  const { pets } = usePets();
   const { vaccines, getVaccines } = useVaccine();
 
   const selected = pets.filter((item) => item.id === petId);
@@ -86,6 +86,7 @@ export const CardVaccine = ({
                     p="5"
                     w="100%"
                     justify="space-evenly"
+                    onClick={() => console.log("editVaccine")}
                   >
                     <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
                     <Box>
@@ -123,6 +124,7 @@ export const CardVaccine = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
+                  onClick={() => console.log("editVaccine")}
                 >
                   <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
                   <Box>

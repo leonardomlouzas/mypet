@@ -10,13 +10,11 @@ import {
 import { useEffect } from "react";
 
 import { Header } from "../Header";
-import { Botao } from "../Button";
 
 import { usePets } from "../../contexts/ContextPets";
 import { useAuth } from "../../contexts/ContextAuth";
 
 import VenusIcon from "../../assets/venus-solid.svg";
-import MarsIcon from "../../assets/mars-solid.svg";
 import BgImage from "../../assets/background.png";
 interface CardPetProps {
   mobile: boolean;

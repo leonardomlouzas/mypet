@@ -1,5 +1,5 @@
 import { useMediaQuery } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { CardFood } from "../../components/Food";
 import { CardPetshop } from "../../components/CardPetShop";
