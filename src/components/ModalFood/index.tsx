@@ -18,16 +18,30 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Input } from "../Form/Input";
-
+import { useAuth } from "../../contexts/ContextAuth";
+import { useFood } from "../../contexts/ContextFood";
 interface FormEditData {
   item: string;
   price: number;
-  quantity: number;
+  quantity: string;
   frequency: string;
   details: string;
 }
+interface Food {
+  item?: string;
+  price?: number;
+  quantity?: string;
+  frequency?: string;
+  details?: string;
+  petId: number;
+  userId: number;
+}
+
 export const ModalFood = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { user, accessToken } = useAuth();
+  const { editFood, removeFood } = useFood();
 
   const schemaEdit = yup.object().shape({
     item: yup.string().required(),
@@ -45,10 +59,26 @@ export const ModalFood = () => {
     resolver: yupResolver(schemaEdit),
   });
 
-  const handleEdit = (data: FormEditData) => {
-    console.log(data);
+  const handleEdit = ({
+    item,
+    price,
+    quantity,
+    frequency,
+    details,
+  }: FormEditData) => {
+    const newFood = {
+      item: item,
+      price: price,
+      quantity: quantity,
+      frequency: frequency,
+      details: details,
+    };
+    editFood(newFood as Food, user.id, accessToken);
   };
 
+  const handleDelete = (id: number) => {
+    removeFood(id, accessToken);
+  };
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
@@ -113,7 +143,7 @@ export const ModalFood = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => console.log("confirmado")}>Deletar</Button>
+            <Button onClick={() => handleDelete(2)}>Deletar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
