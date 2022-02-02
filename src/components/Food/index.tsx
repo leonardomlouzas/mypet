@@ -28,16 +28,9 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
   return (
     <>
       {mobile ? (
-        <Box w="100vw" h="100vh">
+        <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
           <Header />
-          <Flex
-            bg="blue.300"
-            bgImg={BgImage}
-            align="center"
-            justify="center"
-            w="100%"
-            h="100%"
-          >
+          <Flex justify="center" w="100%" mt="25px">
             <Flex
               p="5"
               direction="column"
@@ -119,26 +112,27 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
               <Heading as="h2">{petName}</Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closeFood} />
             </Flex>
-
-            {food
-              .filter((item) => item.userId === user.id)
-              .map((item, index) => (
-                <Flex
-                  key={index}
-                  direction="row"
-                  p="5"
-                  borderBottom="1px"
-                  w="100%"
-                >
-                  <Image src={Utensils} w="35px" h="35px" mr="15px" />
-                  <Box>
-                    <Heading as="h3">{item.item}</Heading>
-                    <Text>{item.quantity}</Text>
-                    <Text>{item.price}</Text>
-                    <Text>{item.frequency}</Text>
-                  </Box>
-                </Flex>
-              ))}
+            <Box bg="gray.200" w="100%" minH="400px">
+              {food
+                .filter((item) => item.userId === user.id)
+                .map((item, index) => (
+                  <Flex
+                    key={index}
+                    direction="row"
+                    p="5"
+                    borderBottom="1px"
+                    w="100%"
+                  >
+                    <Image src={Utensils} w="35px" h="35px" mr="15px" />
+                    <Box>
+                      <Heading as="h3">{item.item}</Heading>
+                      <Text>{item.quantity}</Text>
+                      <Text>{item.price}</Text>
+                      <Text>{item.frequency}</Text>
+                    </Box>
+                  </Flex>
+                ))}
+            </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
               <Heading as="h4">Adicionar Serviço</Heading>
             </Center>

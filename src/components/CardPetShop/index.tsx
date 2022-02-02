@@ -35,7 +35,7 @@ export const CardPetshop = ({
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
           <Header />
-          <Flex bg="blue.300" justify="center" w="100%" h="100%">
+          <Flex justify="center" w="100%" mt="25px">
             <Flex
               p="5"
               direction="column"
@@ -112,23 +112,24 @@ export const CardPetshop = ({
               <Heading as="h2">{petName}</Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closePetShop} />
             </Flex>
-
-            {petShop.map((item, index) => (
-              <Flex
-                key={index}
-                direction="row"
-                p="5"
-                borderBottom="1px"
-                w="100%"
-              >
-                <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
-                <Box>
-                  <Heading as="h3">{item.service}</Heading>
-                  <Text>{item.date}</Text>
-                  <Text>{item.price}</Text>
-                </Box>
-              </Flex>
-            ))}
+            <Box bg="gray.200" w="100%" minH="400px">
+              {petShop.map((item, index) => (
+                <Flex
+                  key={index}
+                  direction="row"
+                  p="5"
+                  borderBottom="1px"
+                  w="100%"
+                >
+                  <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
+                  <Box>
+                    <Heading as="h3">{item.service}</Heading>
+                    <Text>{item.date}</Text>
+                    <Text>{item.price}</Text>
+                  </Box>
+                </Flex>
+              ))}
+            </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
               <Heading as="h4">Adicionar Serviço</Heading>
             </Center>

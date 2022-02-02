@@ -97,22 +97,23 @@ export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
               <Heading as="h2">{petName}</Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closeFeed} />
             </Flex>
-
-            {pets.map((item, index) => (
-              <Flex
-                key={index}
-                direction="row"
-                p="5"
-                borderBottom="1px"
-                w="100%"
-              >
-                <Image src={Bowl} w="35px" h="35px" mr="15px" />
-                <Box>
-                  <Heading as="h3">{item.feed?.frequency}</Heading>
-                  <Text>{item.feed?.time}</Text>
-                </Box>
-              </Flex>
-            ))}
+            <Box bg="gray.200" w="100%" minH="400px">
+              {pets.map((item, index) => (
+                <Flex
+                  key={index}
+                  direction="row"
+                  p="5"
+                  borderBottom="1px"
+                  w="100%"
+                >
+                  <Image src={Bowl} w="35px" h="35px" mr="15px" />
+                  <Box>
+                    <Heading as="h3">{item.feed?.frequency}</Heading>
+                    <Text>{item.feed?.time}</Text>
+                  </Box>
+                </Flex>
+              ))}
+            </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
               <Heading as="h4">Adicionar Alimento</Heading>
             </Center>

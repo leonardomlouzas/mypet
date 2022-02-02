@@ -67,7 +67,7 @@ export const Dashboard = () => {
             closeVaccine={backButton}
           />
         ) : (
-          <CardPets mobile={!isLargerThan480} open={() => setOpenPet(true)} />
+          <CardPets mobile={!isLargerThan480} open={handler} />
         )
       ) : (
         <CardPets mobile={!isLargerThan480} open={handler} />

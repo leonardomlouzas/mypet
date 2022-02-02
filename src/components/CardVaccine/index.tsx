@@ -114,25 +114,31 @@ export const CardVaccine = ({
               <Heading as="h2">{petName}</Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closeVaccine} />
             </Flex>
-
-            {vaccines.map((item, index) => (
-              <Flex
-                key={index}
-                direction="row"
-                p="5"
-                borderBottom="1px"
-                w="100%"
-              >
-                <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
-                <Box>
-                  <Heading as="h3">{item.vaccine_name}</Heading>
-                  <Text>{item.date}</Text>
-                  <Text>{item.expiration}</Text>
-                </Box>
-              </Flex>
-            ))}
+            <Box bg="gray.200" w="100%" minH="400px">
+              {vaccines.map((item, index) => (
+                <Flex
+                  key={index}
+                  direction="row"
+                  align="center"
+                  p="5"
+                  borderBottom="1px"
+                  w="100%"
+                >
+                  <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
+                  <Box>
+                    <Heading as="h3" size="16px">
+                      {item.vaccine_name}
+                    </Heading>
+                    <Text>{item.date}</Text>
+                    <Text>{item.expiration}</Text>
+                  </Box>
+                </Flex>
+              ))}
+            </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
-              <Heading as="h4">Adicionar Vacina</Heading>
+              <Heading as="h4" size="md">
+                Adicionar Vacina
+              </Heading>
             </Center>
           </Box>
         </>
