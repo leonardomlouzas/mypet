@@ -1,35 +1,77 @@
-import { Header } from "../../components/Header";
+import { useMediaQuery } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+
+import { CardFood } from "../../components/Food";
+import { CardPetshop } from "../../components/CardPetShop";
+import { CardFeed } from "../../components/CardFeed";
 import { CardPets } from "../../components/CardPets";
-import { Box, Flex } from "@chakra-ui/react";
-import BgImage from "../../assets/background.png";
-
-import { useAuth } from "../../contexts/ContextAuth";
-import { usePets } from "../../contexts/ContextPets";
-
-import { useEffect } from "react";
+import { CardVaccine } from "../../components/CardVaccine";
 
 export const Dashboard = () => {
-  const { accessToken, user } = useAuth();
-  const { pets, getPets } = usePets();
+  const [openPet, setOpenPet] = useState(false);
+  const [petId, setPetId] = useState(0);
+  const [petName, setPetName] = useState("");
+  const [vaccineOpen, setVaccineOpen] = useState(false);
+  const [petShopOpen, setPetShopOpen] = useState(false);
+  const [feedOpen, setFeedOpen] = useState(false);
+  const [foodOpen, setFoodOpen] = useState(false);
+  const [isLargerThan480] = useMediaQuery("(min-width: 480px)");
 
-  useEffect(() => {
-    getPets(accessToken, user.id);
-  }, []);
+  const handler = (id: number, name: string) => {
+    setOpenPet(true);
+    setFoodOpen(false);
+    setFeedOpen(false);
+    setPetShopOpen(false);
+    setVaccineOpen(true);
+    setPetId(id);
+    setPetName(name);
+    console.log("funcionou");
+  };
+
+  const backButton = () => {
+    setVaccineOpen(false);
+    setPetShopOpen(false);
+    setFoodOpen(false);
+    setFeedOpen(false);
+  };
 
   return (
-    <Box bg="blue.200" bgImage={BgImage} w="100vw" h="100vh">
-      <Header />
-      <Flex align="center" justify="center" mt="5">
-        {pets.map((pet, index) => (
-          <CardPets
-            key={index}
-            petImage={pet.img_url}
-            petName={pet.nome}
-            petSpecie={pet.specie}
-            petAge={pet.age}
+    <>
+      {openPet ? (
+        foodOpen ? (
+          <CardFood
+            mobile={isLargerThan480}
+            petName={petName}
+            petId={petId}
+            closeFood={backButton}
           />
-        ))}
-      </Flex>
-    </Box>
+        ) : petShopOpen ? (
+          <CardPetshop
+            mobile={isLargerThan480}
+            petId={petId}
+            petName={petName}
+            closePetShop={backButton}
+          />
+        ) : feedOpen ? (
+          <CardFeed
+            mobile={isLargerThan480}
+            petId={petId}
+            petName={petName}
+            closeFeed={backButton}
+          />
+        ) : vaccineOpen ? (
+          <CardVaccine
+            mobile={isLargerThan480}
+            petId={petId}
+            petName={petName}
+            closeVaccine={backButton}
+          />
+        ) : (
+          <CardPets mobile={!isLargerThan480} open={() => setOpenPet(true)} />
+        )
+      ) : (
+        <CardPets mobile={!isLargerThan480} open={handler} />
+      )}
+    </>
   );
 };

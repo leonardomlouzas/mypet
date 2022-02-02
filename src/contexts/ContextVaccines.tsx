@@ -53,17 +53,17 @@ const VaccineProvider = ({ children }: VaccineProviderProps) => {
   const getVaccines = useCallback(async (accessToken: string) => {
     await api
       .get("/vaccines", {
-        headers: { authorization: `Bearer${accessToken}` },
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .then((response) => setVaccines(response.data))
-      .catch((err) => console.log("getVaccines fucntion error", err));
+      .catch((err) => console.log("getVaccines function error", err));
   }, []);
 
   const registerVaccine = useCallback(
     async (data: Vaccines, accessToken: string) => {
       await api
         .post("/vaccines", data, {
-          headers: { authorization: `Bearer${accessToken}` },
+          headers: { authorization: `Bearer ${accessToken}` },
         })
         .catch((err) => console.log("registerVaccines function error", err));
     },
@@ -73,8 +73,8 @@ const VaccineProvider = ({ children }: VaccineProviderProps) => {
   const editVaccine = useCallback(
     async (data: Vaccines, id: number, accessToken: string) => {
       await api
-        .patch(`/vaccine/${id}`, data, {
-          headers: { authorization: `Bearer${accessToken}` },
+        .patch(`/vaccines/${id}`, data, {
+          headers: { authorization: `Bearer ${accessToken}` },
         })
         .catch((err) => console.log("editVaccine function error", err));
     },
@@ -83,8 +83,8 @@ const VaccineProvider = ({ children }: VaccineProviderProps) => {
 
   const removeVaccine = useCallback(async (id: number, accessToken: string) => {
     await api
-      .delete(`/vaccine/${id}`, {
-        headers: { authorization: `Bearer${accessToken}` },
+      .delete(`/vaccines/${id}`, {
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .catch((err) => console.log("removeVaccine funciont error", err));
   }, []);

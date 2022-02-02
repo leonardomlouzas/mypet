@@ -49,7 +49,7 @@ const PetShopProvider = ({ children }: PetShopProviderProps) => {
 
   const getPetShop = useCallback(async (accessToken: string) => {
     await api
-      .get("/petShop", { headers: { auth: `Bearer${accessToken}` } })
+      .get("/petShop", { headers: { auth: `Bearer ${accessToken}` } })
       .then((response) => setPetShop(response.data))
       .catch((err) => console.log("getPetShop function error", err));
   }, []);
@@ -58,7 +58,7 @@ const PetShopProvider = ({ children }: PetShopProviderProps) => {
     async (data: PetShop, accessToken: string) => {
       await api
         .post("/petShop", data, {
-          headers: { auth: `Bearer${accessToken}` },
+          headers: { auth: `Bearer ${accessToken}` },
         })
         .catch((err) => console.log("registrationPetShop function error", err));
     },
@@ -69,7 +69,7 @@ const PetShopProvider = ({ children }: PetShopProviderProps) => {
     async (data: PetShop, id: number, accessToken: string) => {
       await api
         .patch(`/petShop/${id}`, data, {
-          headers: { auth: `Bearer${accessToken}` },
+          headers: { auth: `Bearer ${accessToken}` },
         })
         .catch((err) => console.log("editPetShop function error", err));
     },
@@ -78,7 +78,7 @@ const PetShopProvider = ({ children }: PetShopProviderProps) => {
 
   const deletePetShop = useCallback(async (id: number, accessToken: string) => {
     await api
-      .delete(`/petShop/${id}`, { headers: { auth: `Bearer${accessToken}` } })
+      .delete(`/petShop/${id}`, { headers: { auth: `Bearer ${accessToken}` } })
       .catch((err) => console.log("deletePetShop function error", err));
   }, []);
 

@@ -1,37 +1,140 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
-import Syringe from "../../assets/syringe-solid.svg";
+import { Box, Flex, Heading, Image, Text, Center } from "@chakra-ui/react";
+import PetShopIcon from "../../assets/store-alt-solid.svg";
+import ArrowIcon from "../../assets/arrow-left-solid.svg";
+import BgImage from "../../assets/background.png";
+import { Header } from "../Header";
+import { usePetShop } from "../../contexts/ContextPetShop";
+import { useAuth } from "../../contexts/ContextAuth";
+import { usePets } from "../../contexts/ContextPets";
+import { useEffect } from "react";
 
 interface PetShopProps {
-  service: string;
-  frequency: string;
-  date: Date;
-  price: number;
+  petName: string;
+  petId: number;
+  mobile: boolean;
+  closePetShop: () => void;
 }
 
 export const CardPetshop = ({
-  service,
-  frequency,
-  date,
-  price,
+  petName,
+  petId,
+  mobile,
+  closePetShop,
 }: PetShopProps) => {
+  const { petShop, getPetShop } = usePetShop();
+  const { accessToken } = useAuth();
+  const { pets } = usePets();
+
+  const selected = pets.filter((item) => item.id === petId);
+
+  useEffect(() => {
+    getPetShop(accessToken);
+  });
   return (
-    <Flex
-      backgroundColor="white"
-      width="100%"
-      padding="15px"
-      gap="15px"
-      flexDirection="row"
-      justifyContent="space-around"
-    >
-      <Image src={Syringe} w="30px" />
-      <Flex flexDirection="column" textAlign="center">
-        <Text fontWeight="bold">{service}</Text>
-        <Text>{frequency}</Text>
-      </Flex>
-      <Flex flexDirection="column" textAlign="center">
-        <Text>{date}</Text>
-        <Text>{price}</Text>
-      </Flex>
-    </Flex>
+    <>
+      {mobile ? (
+        <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
+          <Header />
+          <Flex bg="blue.300" justify="center" w="100%" h="100%">
+            <Flex
+              p="5"
+              direction="column"
+              bg="white"
+              borderRadius="20px"
+              w="600px"
+            >
+              <Flex borderBottom="1px" pb="15px">
+                <Image
+                  src={selected[0].img_url}
+                  alt={selected[0].nome}
+                  w="150px"
+                  h="200px"
+                  mr="15px"
+                  borderRadius="20px"
+                />
+                <Flex justify="space-between" w="100%">
+                  <Box>
+                    <Heading as="h3">{selected[0].nome}</Heading>
+                    <Text>{selected[0].specie}</Text>
+                    <Text>{selected[0].age}</Text>
+                  </Box>
+                  <Box>
+                    <Image
+                      src={ArrowIcon}
+                      w="50px"
+                      h="30px"
+                      onClick={closePetShop}
+                    />
+                  </Box>
+                </Flex>
+              </Flex>
+              <Flex
+                bg="gray.300"
+                borderRadius="15px"
+                w="80%"
+                align="center"
+                justify="center"
+                m="0 auto"
+                mt="15px"
+              >
+                {petShop.map((item, index) => (
+                  <Flex
+                    key={index}
+                    direction="row"
+                    p="5"
+                    w="100%"
+                    justify="space-evenly"
+                  >
+                    <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
+                    <Box>
+                      <Heading as="h3" size="24px">
+                        {item.service}
+                      </Heading>
+                      <Text>{item.date}</Text>
+                      <Text>{item.price}</Text>
+                    </Box>
+                  </Flex>
+                ))}
+              </Flex>
+            </Flex>
+          </Flex>
+        </Box>
+      ) : (
+        <>
+          <Box w="100vw" h="100vh">
+            <Flex
+              align="center"
+              justify="space-between"
+              bg="blue.300"
+              w="100%"
+              h="70px"
+            >
+              <Heading as="h2">{petName}</Heading>
+              <Image src={ArrowIcon} w="50px" h="30px" onClick={closePetShop} />
+            </Flex>
+
+            {petShop.map((item, index) => (
+              <Flex
+                key={index}
+                direction="row"
+                p="5"
+                borderBottom="1px"
+                w="100%"
+              >
+                <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
+                <Box>
+                  <Heading as="h3">{item.service}</Heading>
+                  <Text>{item.date}</Text>
+                  <Text>{item.price}</Text>
+                </Box>
+              </Flex>
+            ))}
+            <Center w="100%" h="70px" bg="yellow.300" p="5">
+              <Heading as="h4">Adicionar Serviço</Heading>
+            </Center>
+          </Box>
+        </>
+      )}
+    </>
   );
 };

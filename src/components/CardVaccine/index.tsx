@@ -1,33 +1,142 @@
-import { Flex, Image, Icon, Box, Heading, Text } from "@chakra-ui/react";
+import { Flex, Image, Box, Heading, Text, Center } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import VaccineIcon from "../../assets/syringe-solid.svg";
+import ArrowIcon from "../../assets/arrow-left-solid.svg";
+import BgImage from "../../assets/background.png";
+import { useVaccine } from "../../contexts/ContextVaccines";
+import { Header } from "../Header";
+import { useEffect } from "react";
+import { useAuth } from "../../contexts/ContextAuth";
+import { usePets } from "../../contexts/ContextPets";
 
 interface VaccineCardProps {
-  vaccineName: string;
-  vaccineData: string;
-  vaccineExpiration: string;
+  petName: string;
+  petId: number;
+  mobile: boolean;
+  closeVaccine: () => void;
 }
 
 export const CardVaccine = ({
-  vaccineName,
-  vaccineData,
-  vaccineExpiration,
+  petName,
+  petId,
+  mobile,
+  closeVaccine,
 }: VaccineCardProps) => {
+  const { accessToken, user } = useAuth();
+  const { pets, getPets } = usePets();
+  const { vaccines, getVaccines } = useVaccine();
+
+  const selected = pets.filter((item) => item.id === petId);
+
+  useEffect(() => {
+    getVaccines(accessToken);
+  });
+
   return (
-    <Flex direction="row" p="5" h="80px" w="80%">
-      <Image src={VaccineIcon} w="50" h="48" alt="teste" />
-      <Flex w="80%" justify="space-between">
-        <Box>
-          <Heading as="h4" size="sm">
-            {vaccineName}
-          </Heading>
-          <Text>{vaccineData}</Text>
+    <>
+      {mobile ? (
+        <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
+          <Header />
+          <Flex justify="center" w="100%" mt="25px">
+            <Flex
+              p="5"
+              direction="column"
+              bg="white"
+              borderRadius="20px"
+              w="600px"
+            >
+              <Flex borderBottom="1px" pb="15px">
+                <Image
+                  src={selected[0].img_url}
+                  alt={selected[0].nome}
+                  w="150px"
+                  h="200px"
+                  mr="15px"
+                  borderRadius="20px"
+                />
+                <Flex justify="space-between" w="100%">
+                  <Box>
+                    <Heading as="h3">{selected[0].nome}</Heading>
+                    <Text>{selected[0].specie}</Text>
+                    <Text>{selected[0].age}</Text>
+                  </Box>
+                  <Box>
+                    <Image
+                      src={ArrowIcon}
+                      w="50px"
+                      h="30px"
+                      onClick={closeVaccine}
+                    />
+                  </Box>
+                </Flex>
+              </Flex>
+              <Flex
+                bg="gray.300"
+                borderRadius="15px"
+                w="80%"
+                align="center"
+                justify="center"
+                m="0 auto"
+                mt="15px"
+              >
+                {vaccines.map((item, index) => (
+                  <Flex
+                    key={index}
+                    direction="row"
+                    p="5"
+                    w="100%"
+                    justify="space-evenly"
+                  >
+                    <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
+                    <Box>
+                      <Heading as="h3" size="24px">
+                        {item.vaccine_name}
+                      </Heading>
+                      <Text>{item.date}</Text>
+                      <Text>{item.expiration}</Text>
+                    </Box>
+                  </Flex>
+                ))}
+              </Flex>
+            </Flex>
+          </Flex>
         </Box>
-        <Box>
-          <Icon as={FaEdit} w="20px" h="20px" />
-          <Text>{vaccineExpiration} meses</Text>
-        </Box>
-      </Flex>
-    </Flex>
+      ) : (
+        <>
+          <Box w="100vw" h="100vh">
+            <Flex
+              align="center"
+              justify="space-between"
+              bg="blue.300"
+              w="100%"
+              h="70px"
+            >
+              <Heading as="h2">{petName}</Heading>
+              <Image src={ArrowIcon} w="50px" h="30px" onClick={closeVaccine} />
+            </Flex>
+
+            {vaccines.map((item, index) => (
+              <Flex
+                key={index}
+                direction="row"
+                p="5"
+                borderBottom="1px"
+                w="100%"
+              >
+                <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
+                <Box>
+                  <Heading as="h3">{item.vaccine_name}</Heading>
+                  <Text>{item.date}</Text>
+                  <Text>{item.expiration}</Text>
+                </Box>
+              </Flex>
+            ))}
+            <Center w="100%" h="70px" bg="yellow.300" p="5">
+              <Heading as="h4">Adicionar Vacina</Heading>
+            </Center>
+          </Box>
+        </>
+      )}
+    </>
   );
 };

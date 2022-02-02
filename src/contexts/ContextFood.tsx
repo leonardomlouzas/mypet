@@ -47,8 +47,8 @@ const FoodProvider = ({ children }: FoodProviderProps) => {
 
   const getFood = useCallback(async (accessToken: string) => {
     await api
-      .get("/food", {
-        headers: { authorization: `Bearer${accessToken}` },
+      .get("/foods", {
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .then((response) => setFood(response.data))
       .catch((err) => console.log("getFood function error", err));
@@ -57,7 +57,7 @@ const FoodProvider = ({ children }: FoodProviderProps) => {
   const registerFood = useCallback(async (data: Food, accessToken: string) => {
     await api
       .post("/food", data, {
-        headers: { authorization: `Bearer${accessToken}` },
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .catch((err) => console.log("registerFood function error", err));
   }, []);
@@ -66,7 +66,7 @@ const FoodProvider = ({ children }: FoodProviderProps) => {
     async (data: Food, id: number, accessToken: string) => {
       await api
         .patch(`/food/${id}`, data, {
-          headers: { authorization: `Bearer${accessToken}` },
+          headers: { authorization: `Bearer ${accessToken}` },
         })
         .catch((err) => console.log("editFood function error", err));
     },
