@@ -12,10 +12,6 @@ export const Dashboard = () => {
   const [openPet, setOpenPet] = useState(false);
   const [petId, setPetId] = useState(0);
   const [petName, setPetName] = useState("");
-  const [petImg, setpetImg] = useState("");
-  const [petAge, setPetAge] = useState(0);
-  const [petRace, setPetRace] = useState("");
-  const [petSpecie, setPetSpecie] = useState("");
   const [vaccineOpen, setVaccineOpen] = useState(false);
   const [petShopOpen, setPetShopOpen] = useState(false);
   const [feedOpen, setFeedOpen] = useState(false);
@@ -33,10 +29,6 @@ export const Dashboard = () => {
     setOpenPet(true);
     setPetId(id);
     setPetName(name);
-    setpetImg(img);
-    setPetAge(age);
-    setPetRace(race);
-    setPetSpecie(specie);
   };
 
   const backButton = () => {
@@ -67,12 +59,7 @@ export const Dashboard = () => {
           <CardFeed
             mobile={isLargerThan480}
             petId={petId}
-            petName={petName}
             closeFeed={backButton}
-            age={petAge}
-            img={petImg}
-            race={petRace}
-            specie={petSpecie}
           />
         ) : vaccineOpen ? (
           <CardVaccine

@@ -19,44 +19,41 @@ import { ModalFeed } from "../ModalFeed";
 import { useEffect, useState } from "react";
 
 interface FeedProps {
-  petName: string;
   petId: number;
-  img: string;
-  age: number;
-  race: string;
-  specie: string;
   mobile: boolean;
   closeFeed: () => void;
 }
-export const CardFeed = ({
-  petName,
-  petId,
-  mobile,
-  closeFeed,
-  img,
-  age,
-  race,
-  specie,
-}: FeedProps) => {
+export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
   const { pets } = usePets();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [isNew, setIsNew] = useState(false);
+
   const selected = pets.filter((item) => item.id === petId);
 
+  const handle = (state: boolean) => {
+    if (state) {
+      setIsNew(true);
+      onOpen();
+    } else {
+      setIsNew(false);
+      onOpen();
+    }
+  };
   return (
     <>
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
           <ModalFeed
-            petId={petId}
+            petId={selected[0].id}
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
-            oldAge={age}
-            oldImg={img}
-            oldNome={petName}
-            oldRace={race}
-            oldSpecie={specie}
+            oldAge={selected[0].age}
+            oldImg={selected[0].img_url}
+            oldNome={selected[0].nome}
+            oldRace={selected[0].race}
+            oldSpecie={selected[0].specie}
           />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
@@ -92,13 +89,13 @@ export const CardFeed = ({
                       onClick={closeFeed}
                       _hover={{ cursor: "pointer" }}
                     />
-                    <Image
+                    {/* <Image
                       src={PlusIcon}
                       w="50px"
                       h="30px"
-                      onClick={() => console.log("Abrir modal")}
+                      onClick={() => handle(true)}
                       _hover={{ cursor: "pointer" }}
-                    />
+                    /> */}
                   </Flex>
                 </Flex>
               </Flex>
@@ -147,11 +144,11 @@ export const CardFeed = ({
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
-            oldAge={age}
-            oldImg={img}
-            oldNome={petName}
-            oldRace={race}
-            oldSpecie={specie}
+            oldAge={selected[0].age}
+            oldImg={selected[0].img_url}
+            oldNome={selected[0].nome}
+            oldRace={selected[0].race}
+            oldSpecie={selected[0].specie}
           />
           <Box w="100vw" h="100vh">
             <Flex
@@ -162,7 +159,7 @@ export const CardFeed = ({
               h="70px"
             >
               <Heading as="h2" size="32px">
-                {petName.toUpperCase()}
+                {selected[0].nome.toUpperCase()}
               </Heading>
               <Image
                 src={ArrowIcon}
@@ -180,7 +177,7 @@ export const CardFeed = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={onOpen}
+                  onClick={() => handle(false)}
                 >
                   <Image src={Bowl} w="35px" h="35px" mr="15px" />
                   <Box>
@@ -190,9 +187,15 @@ export const CardFeed = ({
                 </Flex>
               ))}
             </Box>
-            <Center w="100%" h="70px" bg="yellow.300" p="5">
+            {/* <Center
+              w="100%"
+              h="70px"
+              bg="yellow.300"
+              p="5"
+              onClick={() => handle(true)}
+            >
               <Heading as="h4">Adicionar Alimento</Heading>
-            </Center>
+            </Center> */}
           </Box>
         </>
       )}
