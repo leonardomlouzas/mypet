@@ -66,6 +66,7 @@ export const Dashboard = () => {
         ) : openPet ? (
           <CardPetOpen
             petId={petId}
+            mobile={isLargerThan480}
             returnToDesktop={() => setOpenPet(false)}
             enterVaccine={() => setVaccineOpen(true)}
             enterPetShop={() => setPetShopOpen(true)}

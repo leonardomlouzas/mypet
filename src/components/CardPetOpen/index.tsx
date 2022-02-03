@@ -20,6 +20,7 @@ import { usePets } from "../../contexts/ContextPets";
 
 interface CardPetOpenProps {
   petId: number;
+  mobile: boolean;
   returnToDesktop: () => void;
   enterVaccine: () => void;
   enterPetShop: () => void;
@@ -29,6 +30,7 @@ interface CardPetOpenProps {
 
 export const CardPetOpen = ({
   petId,
+  mobile,
   returnToDesktop,
   enterVaccine,
   enterPetShop,
@@ -69,7 +71,7 @@ export const CardPetOpen = ({
             <Image src={VenusIcon} h="50px" w="50px" />
           </Flex>
           <Badge bg="yellow.300">{selected[0].specie}</Badge>
-          <Text>Idage: {selected[0].age} anos</Text>
+          <Text>Idade: {selected[0].age} anos</Text>
         </Box>
       </Flex>
       <Flex direction="column" justify="center" align="center">
@@ -79,7 +81,7 @@ export const CardPetOpen = ({
           w="150px"
           borderRadius="10px"
           bg="yellow.300"
-          _hover={{ bg: "yellow.200" }}
+          _hover={{ bg: "yellow.200", cursor: "pointer" }}
           align="center"
           justify="center"
           direction="column"
@@ -94,7 +96,7 @@ export const CardPetOpen = ({
           w="150px"
           borderRadius="10px"
           bg="yellow.300"
-          _hover={{ bg: "yellow.200" }}
+          _hover={{ bg: "yellow.200", cursor: "pointer" }}
           align="center"
           justify="center"
           direction="column"
@@ -109,7 +111,7 @@ export const CardPetOpen = ({
           w="150px"
           borderRadius="10px"
           bg="yellow.300"
-          _hover={{ bg: "yellow.200" }}
+          _hover={{ bg: "yellow.200", cursor: "pointer" }}
           align="center"
           justify="center"
           direction="column"
@@ -124,7 +126,7 @@ export const CardPetOpen = ({
           w="150px"
           borderRadius="10px"
           bg="yellow.300"
-          _hover={{ bg: "yellow.200" }}
+          _hover={{ bg: "yellow.200", cursor: "pointer" }}
           align="center"
           justify="center"
           direction="column"
@@ -134,9 +136,19 @@ export const CardPetOpen = ({
           <Text>Estoque</Text>
         </Flex>
       </Flex>
-      <Center w="100%" h="50px" bg="yellow.300">
-        <Text>Adicionar</Text>
-      </Center>
+      {mobile ? (
+        ""
+      ) : (
+        <Center
+          w="100%"
+          h="50px"
+          bg="yellow.300"
+          onClick={() => console.log("Editar Pet")}
+          _hover={{ bg: "yellow.200", cursor: "pointer" }}
+        >
+          <Text>Editar Pet</Text>
+        </Center>
+      )}
     </Box>
   );
 };
