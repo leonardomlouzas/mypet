@@ -25,6 +25,8 @@ interface ModalFoodProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  isNew: boolean;
+  petid: number;
 }
 interface FormEditData {
   item: string;
@@ -41,6 +43,7 @@ interface Food {
   details?: string;
   userId: number;
   id: number;
+  idPet?: number;
 }
 
 export const ModalFood = ({
@@ -48,9 +51,11 @@ export const ModalFood = ({
   isOpen,
   onOpen,
   onClose,
+  isNew,
+  petid,
 }: ModalFoodProps) => {
-  const { accessToken } = useAuth();
-  const { editFood, removeFood } = useFood();
+  const { accessToken, user } = useAuth();
+  const { registerFood, editFood, removeFood } = useFood();
 
   const schemaEdit = yup.object().shape({
     item: yup.string().required(),
@@ -67,6 +72,26 @@ export const ModalFood = ({
   } = useForm<FormEditData>({
     resolver: yupResolver(schemaEdit),
   });
+
+  const handleNew = ({
+    item,
+    price,
+    quantity,
+    frequency,
+    details,
+  }: FormEditData) => {
+    const newFood = {
+      item: item,
+      price: price,
+      quantity: quantity,
+      frequency: frequency,
+      details: details,
+      idPet: petid,
+      userId: user.id,
+    };
+    registerFood(newFood as Food, accessToken);
+    onClose();
+  };
 
   const handleEdit = ({
     item,
@@ -101,9 +126,12 @@ export const ModalFood = ({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Editar</ModalHeader>
+          <ModalHeader>{isNew ? "Adicionar" : "Editar"}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody as="form" onSubmit={handleSubmit(handleEdit)}>
+          <ModalBody
+            as="form"
+            onSubmit={handleSubmit(isNew ? handleNew : handleEdit)}
+          >
             <VStack alignItems="flex-start">
               <Input
                 label="Nome do item"
@@ -153,7 +181,9 @@ export const ModalFood = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleDelete(foodId)}>Deletar</Button>
+            {!isNew && (
+              <Button onClick={() => handleDelete(foodId)}>Deletar</Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>

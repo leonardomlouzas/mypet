@@ -20,6 +20,7 @@ interface Food {
   details?: string;
   userId: number;
   id: number;
+  idPet?: number;
 }
 
 interface FoodProviderData {
