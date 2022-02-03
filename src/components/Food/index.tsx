@@ -38,7 +38,6 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
   const selectedFood = food.filter((item) => item.userId === user.id);
 
   useEffect(() => {
-    console.log(accessToken);
     getFood(accessToken);
   }, []);
 

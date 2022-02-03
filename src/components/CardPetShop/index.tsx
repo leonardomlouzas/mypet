@@ -108,7 +108,7 @@ export const CardPetshop = ({
                       src={PlusIcon}
                       w="50px"
                       h="30px"
-                      onClick={() => console.log("abrir modal")}
+                      onClick={() => handle(0, true)}
                       _hover={{ cursor: "pointer" }}
                     />
                   </Flex>
