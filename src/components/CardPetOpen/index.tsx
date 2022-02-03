@@ -6,13 +6,15 @@ import {
   Text,
   Badge,
   Center,
+  useDisclosure,
 } from "@chakra-ui/react";
 
-import VenusIcon from "../../assets/venus-solid.svg";
 import SyringeIcon from "../../assets/syringe-solid.svg";
 import BowlIcon from "../../assets/bowl-solid.svg";
 import StoreIcon from "../../assets/store-alt-solid.svg";
 import UtensilsIcon from "../../assets/utensils-solid.svg";
+
+import { ModalPet } from "../ModalPet";
 
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 
@@ -38,12 +40,19 @@ export const CardPetOpen = ({
   enterFood,
 }: CardPetOpenProps) => {
   const { pets } = usePets();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const selected = pets.filter((item) => item.id === petId);
 
   return (
     //mobileCode
     <Box w="320px" bg="gray.200">
+      <ModalPet
+        petId={petId}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+      />
       <Flex
         w="100%"
         h="70px"
@@ -52,7 +61,9 @@ export const CardPetOpen = ({
         justify="space-between"
         p="5"
       >
-        <Heading as="h2">{selected[0].nome}</Heading>
+        <Heading as="h2" size={mobile ? "32px" : "32px"}>
+          {selected[0].nome}
+        </Heading>
         <Image src={ArrowIcon} w="70px" h="50px" onClick={returnToDesktop} />
       </Flex>
 
@@ -67,8 +78,10 @@ export const CardPetOpen = ({
         />
         <Box>
           <Flex>
-            <Heading as="h2">{selected[0].nome}</Heading>
-            <Image src={VenusIcon} h="50px" w="50px" />
+            <Heading as="h2" size={mobile ? "24px" : "16px"}>
+              {selected[0].nome}
+            </Heading>
+            {/* <Image src={VenusIcon} h="50px" w="50px" /> */}
           </Flex>
           <Badge bg="yellow.300">{selected[0].specie}</Badge>
           <Text>Idade: {selected[0].age} anos</Text>
@@ -143,7 +156,7 @@ export const CardPetOpen = ({
           w="100%"
           h="50px"
           bg="yellow.300"
-          onClick={() => console.log("Editar Pet")}
+          onClick={onOpen}
           _hover={{ bg: "yellow.200", cursor: "pointer" }}
         >
           <Text>Editar Pet</Text>

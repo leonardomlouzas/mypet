@@ -18,8 +18,8 @@ interface Food {
   quantity?: string;
   frequency?: string;
   details?: string;
-  petId: number;
   userId: number;
+  id: number;
 }
 
 interface FoodProviderData {
@@ -56,7 +56,7 @@ const FoodProvider = ({ children }: FoodProviderProps) => {
 
   const registerFood = useCallback(async (data: Food, accessToken: string) => {
     await api
-      .post("/food", data, {
+      .post("/foods", data, {
         headers: { authorization: `Bearer ${accessToken}` },
       })
       .catch((err) => console.log("registerFood function error", err));
@@ -65,7 +65,7 @@ const FoodProvider = ({ children }: FoodProviderProps) => {
   const editFood = useCallback(
     async (data: Food, id: number, accessToken: string) => {
       await api
-        .patch(`/food/${id}`, data, {
+        .patch(`/foods/${id}`, data, {
           headers: { authorization: `Bearer ${accessToken}` },
         })
         .catch((err) => console.log("editFood function error", err));
@@ -75,8 +75,8 @@ const FoodProvider = ({ children }: FoodProviderProps) => {
 
   const removeFood = useCallback(async (id: number, accessToken: string) => {
     await api
-      .delete(`/food/${id}`, {
-        headers: { authorization: `Bearer${accessToken}` },
+      .delete(`/foods/${id}`, {
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .catch((err) => console.log("removeFood function error", err));
   }, []);

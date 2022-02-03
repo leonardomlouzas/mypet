@@ -39,7 +39,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
   const getUser = useCallback(async (accessToken: string) => {
     await api
-      .get("/user", {
+      .get("/users", {
         headers: { authorization: `Bearer${accessToken}` },
       })
       .catch((err) => console.log("getUser function error", err));
@@ -48,7 +48,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const changeUser = useCallback(
     async (data: User, id: number, accessToken: string) => {
       await api
-        .patch(`/user/${id}`, data, {
+        .patch(`/users/${id}`, data, {
           headers: { authorization: `Bearer${accessToken}` },
         })
         .then((response) => setUser(response.data.user))

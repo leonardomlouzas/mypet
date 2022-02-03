@@ -18,7 +18,14 @@ import VenusIcon from "../../assets/venus-solid.svg";
 import BgImage from "../../assets/background.png";
 interface CardPetProps {
   mobile: boolean;
-  open: (item: number, name: string) => void;
+  open: (
+    item: number,
+    name: string,
+    img: string,
+    age: number,
+    race: string,
+    specie: string
+  ) => void;
 }
 
 export const CardPets = ({ mobile, open }: CardPetProps) => {
@@ -58,7 +65,16 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               mr={mobile ? "0px" : "10px"}
               p="5"
               bg="gray.200"
-              onClick={() => open(item.id, item.nome)}
+              onClick={() =>
+                open(
+                  item.id,
+                  item.nome,
+                  item.img_url,
+                  item.age,
+                  item.race,
+                  item.specie
+                )
+              }
               _hover={mobile ? { bg: "blue.300" } : {}}
             >
               <Image

@@ -1,12 +1,21 @@
-import { Box, Center, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Utensils from "../../assets/utensils-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
 import { Header } from "../Header";
 import { useFood } from "../../contexts/ContextFood";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/ContextAuth";
 import { usePets } from "../../contexts/ContextPets";
+import { ModalFood } from "../ModalFood";
 
 interface FeedProps {
   petName: string;
@@ -18,6 +27,8 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
   const { accessToken, user } = useAuth();
   const { pets } = usePets();
   const { food, getFood } = useFood();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [foodId, setFoodId] = useState(0);
 
   const selected = pets.filter((item) => item.id === petId);
 
@@ -25,8 +36,20 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
     console.log(accessToken);
     getFood(accessToken);
   }, []);
+
+  const handler = (id: number) => {
+    setFoodId(id);
+    onOpen();
+  };
+
   return (
     <>
+      <ModalFood
+        foodId={foodId}
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+      />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
           <Header />
@@ -81,7 +104,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                       p="5"
                       w="100%"
                       justify="space-evenly"
-                      onClick={() => console.log("editFood")}
+                      onClick={() => handler(item.id)}
                     >
                       <Image src={Utensils} w="35px" h="35px" mr="15px" />
                       <Box>
@@ -123,7 +146,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                     p="5"
                     borderBottom="1px"
                     w="100%"
-                    onClick={() => console.log("editFood")}
+                    onClick={() => handler(item.id)}
                   >
                     <Image src={Utensils} w="35px" h="35px" mr="15px" />
                     <Box>

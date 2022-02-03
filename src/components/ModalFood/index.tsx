@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
   RadioGroup,
   HStack,
   Radio,
@@ -20,6 +19,13 @@ import * as yup from "yup";
 import { Input } from "../Form/Input";
 import { useAuth } from "../../contexts/ContextAuth";
 import { useFood } from "../../contexts/ContextFood";
+
+interface ModalFoodProps {
+  foodId: number;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
 interface FormEditData {
   item: string;
   price: number;
@@ -33,14 +39,17 @@ interface Food {
   quantity?: string;
   frequency?: string;
   details?: string;
-  petId: number;
   userId: number;
+  id: number;
 }
 
-export const ModalFood = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const { user, accessToken } = useAuth();
+export const ModalFood = ({
+  foodId,
+  isOpen,
+  onOpen,
+  onClose,
+}: ModalFoodProps) => {
+  const { accessToken } = useAuth();
   const { editFood, removeFood } = useFood();
 
   const schemaEdit = yup.object().shape({
@@ -72,17 +81,18 @@ export const ModalFood = () => {
       quantity: quantity,
       frequency: frequency,
       details: details,
+      id: foodId,
     };
-    editFood(newFood as Food, user.id, accessToken);
+    editFood(newFood as Food, foodId, accessToken);
+    onClose();
   };
 
   const handleDelete = (id: number) => {
     removeFood(id, accessToken);
+    onClose();
   };
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -143,7 +153,7 @@ export const ModalFood = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleDelete(2)}>Deletar</Button>
+            <Button onClick={() => handleDelete(foodId)}>Deletar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

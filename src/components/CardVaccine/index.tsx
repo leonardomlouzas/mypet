@@ -1,13 +1,23 @@
-import { Flex, Image, Box, Heading, Text, Center } from "@chakra-ui/react";
+import {
+  Flex,
+  Image,
+  Box,
+  Heading,
+  Text,
+  Center,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import VaccineIcon from "../../assets/syringe-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
 import { useVaccine } from "../../contexts/ContextVaccines";
 import { Header } from "../Header";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/ContextAuth";
 import { usePets } from "../../contexts/ContextPets";
+
+import { ModalVaccine } from "../ModalVaccine";
 
 interface VaccineCardProps {
   petName: string;
@@ -25,6 +35,9 @@ export const CardVaccine = ({
   const { accessToken } = useAuth();
   const { pets } = usePets();
   const { vaccines, getVaccines } = useVaccine();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [vaccineId, setVaccineId] = useState(0);
 
   const selected = pets.filter((item) => item.id === petId);
 
@@ -32,10 +45,21 @@ export const CardVaccine = ({
     getVaccines(accessToken);
   });
 
+  const handler = (vaccineId: number) => {
+    setVaccineId(vaccineId);
+    onOpen();
+  };
+
   return (
     <>
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
+          <ModalVaccine
+            vaccineId={vaccineId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -86,7 +110,12 @@ export const CardVaccine = ({
                     p="5"
                     w="100%"
                     justify="space-evenly"
-                    onClick={() => console.log("editVaccine")}
+                    onClick={() => handler(item.id)}
+                    _hover={{
+                      borderRadius: "15px",
+                      bg: "blue.300",
+                      cursor: "pointer",
+                    }}
                   >
                     <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
                     <Box>
@@ -104,6 +133,12 @@ export const CardVaccine = ({
         </Box>
       ) : (
         <>
+          <ModalVaccine
+            vaccineId={vaccineId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
           <Box w="100vw" h="100vh">
             <Flex
               align="center"
@@ -124,7 +159,7 @@ export const CardVaccine = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={() => console.log("editVaccine")}
+                  onClick={() => handler(item.id)}
                 >
                   <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
                   <Box>

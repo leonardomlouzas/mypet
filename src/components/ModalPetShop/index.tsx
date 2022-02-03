@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
   RadioGroup,
   HStack,
   Radio,
@@ -20,6 +19,14 @@ import * as yup from "yup";
 import { Input } from "../Form/Input";
 import { usePetShop } from "../../contexts/ContextPetShop";
 import { useAuth } from "../../contexts/ContextAuth";
+
+interface PetShopModalProps {
+  petId: number;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+
 interface FormEditData {
   service: string;
   date: Date;
@@ -37,10 +44,13 @@ interface PetShop {
   status: boolean;
 }
 
-export const ModalPetshop = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const { user, accessToken } = useAuth();
+export const ModalPetshop = ({
+  petId,
+  isOpen,
+  onOpen,
+  onClose,
+}: PetShopModalProps) => {
+  const { accessToken } = useAuth();
 
   const { editPetShop, deletePetShop } = usePetShop();
 
@@ -67,18 +77,17 @@ export const ModalPetshop = () => {
       frequency: frequency,
       status: true,
     };
-    const id = 2;
-    editPetShop(newPetShop as PetShop, id, accessToken);
+    editPetShop(newPetShop as PetShop, petId, accessToken);
+    onClose();
   };
 
   const handleDelete = (id: number) => {
     deletePetShop(id, accessToken);
+    onClose();
   };
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}

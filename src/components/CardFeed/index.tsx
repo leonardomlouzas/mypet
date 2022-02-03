@@ -1,18 +1,41 @@
-import { Box, Center, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Bowl from "../../assets/bowl-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
 import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
+import { ModalFeed } from "../ModalFeed";
 
 interface FeedProps {
   petName: string;
   petId: number;
+  img: string;
+  age: number;
+  race: string;
+  specie: string;
   mobile: boolean;
   closeFeed: () => void;
 }
-export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
+export const CardFeed = ({
+  petName,
+  petId,
+  mobile,
+  closeFeed,
+  img,
+  age,
+  race,
+  specie,
+}: FeedProps) => {
   const { pets } = usePets();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const selected = pets.filter((item) => item.id === petId);
 
@@ -20,6 +43,17 @@ export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
     <>
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
+          <ModalFeed
+            petId={petId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+            oldAge={age}
+            oldImg={img}
+            oldNome={petName}
+            oldRace={race}
+            oldSpecie={specie}
+          />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -70,7 +104,7 @@ export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
                     p="5"
                     w="100%"
                     justify="space-evenly"
-                    onClick={() => console.log("editFeed")}
+                    onClick={onOpen}
                   >
                     <Image src={Bowl} w="35px" h="35px" mr="15px" />
                     <Box>
@@ -87,6 +121,17 @@ export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
         </Box>
       ) : (
         <>
+          <ModalFeed
+            petId={petId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+            oldAge={age}
+            oldImg={img}
+            oldNome={petName}
+            oldRace={race}
+            oldSpecie={specie}
+          />
           <Box w="100vw" h="100vh">
             <Flex
               align="center"
@@ -106,7 +151,7 @@ export const CardFeed = ({ petName, petId, mobile, closeFeed }: FeedProps) => {
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={() => console.log("editFeed")}
+                  onClick={onOpen}
                 >
                   <Image src={Bowl} w="35px" h="35px" mr="15px" />
                   <Box>

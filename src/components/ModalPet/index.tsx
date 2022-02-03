@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,6 +15,13 @@ import * as yup from "yup";
 import { usePets } from "../../contexts/ContextPets";
 import { useAuth } from "../../contexts/ContextAuth";
 import { Input } from "../Form/Input";
+
+interface ModalPetProps {
+  petId: number;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
 
 interface FormEditData {
   nome: string;
@@ -39,11 +45,9 @@ interface Pets {
   feed?: Feed;
   id: number;
 }
-export const ModalPet = () => {
+export const ModalPet = ({ petId, isOpen, onOpen, onClose }: ModalPetProps) => {
   const { registerPets, removePets } = usePets();
   const { accessToken, user } = useAuth();
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const schemaEdit = yup.object().shape({
     nome: yup.string().required(),
@@ -79,8 +83,6 @@ export const ModalPet = () => {
   };
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -124,7 +126,7 @@ export const ModalPet = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleDelete(5)}>Deletar</Button>
+            <Button onClick={() => handleDelete(petId)}>Deletar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

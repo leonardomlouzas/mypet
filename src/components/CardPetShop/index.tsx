@@ -1,4 +1,12 @@
-import { Box, Flex, Heading, Image, Text, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  Center,
+  useDisclosure,
+} from "@chakra-ui/react";
 import PetShopIcon from "../../assets/store-alt-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
@@ -7,6 +15,8 @@ import { usePetShop } from "../../contexts/ContextPetShop";
 import { useAuth } from "../../contexts/ContextAuth";
 import { usePets } from "../../contexts/ContextPets";
 import { useEffect } from "react";
+
+import { ModalPetshop } from "../ModalPetShop";
 
 interface PetShopProps {
   petName: string;
@@ -24,6 +34,7 @@ export const CardPetshop = ({
   const { petShop, getPetShop } = usePetShop();
   const { accessToken } = useAuth();
   const { pets } = usePets();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const selected = pets.filter((item) => item.id === petId);
 
@@ -34,6 +45,12 @@ export const CardPetshop = ({
     <>
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
+          <ModalPetshop
+            petId={petId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -84,7 +101,7 @@ export const CardPetshop = ({
                     p="5"
                     w="100%"
                     justify="space-evenly"
-                    onClick={() => console.log("editPetShop")}
+                    onClick={onOpen}
                   >
                     <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
                     <Box>
@@ -102,6 +119,12 @@ export const CardPetshop = ({
         </Box>
       ) : (
         <>
+          <ModalPetshop
+            petId={petId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
           <Box w="100vw" h="100vh">
             <Flex
               align="center"
@@ -121,7 +144,7 @@ export const CardPetshop = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={() => console.log("editPetShop")}
+                  onClick={onOpen}
                 >
                   <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
                   <Box>
