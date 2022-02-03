@@ -102,7 +102,7 @@ export const CardFeed = ({
                       src={PlusIcon}
                       w="50px"
                       h="30px"
-                      onClick={() => console.log("Abrir modal")}
+                      onClick={() => console.log("Add feed")}
                       _hover={{ cursor: "pointer" }}
                     />
                   </Flex>

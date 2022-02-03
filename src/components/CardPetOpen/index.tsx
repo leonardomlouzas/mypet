@@ -61,6 +61,7 @@ export const CardPetOpen = ({
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
+        isNew={false}
       />
       {mobile ? (
         <Box w="100vw" h="100vh" bg={"blue.300"} bgImg={BgImage}>

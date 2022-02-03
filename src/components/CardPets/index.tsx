@@ -6,6 +6,7 @@ import {
   Text,
   Box,
   Center,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -16,6 +17,7 @@ import { useAuth } from "../../contexts/ContextAuth";
 import PlusIcon from "../../assets/plus-solid.svg";
 
 import BgImage from "../../assets/background.png";
+import { ModalPet } from "../ModalPet";
 interface CardPetProps {
   mobile: boolean;
   open: (
@@ -33,6 +35,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
   const { accessToken, user } = useAuth();
 
   const selected = pets.filter((item) => item.userId === user.id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     getPets(accessToken, user.id);
@@ -45,6 +48,13 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
       bg={mobile ? "gray.200" : "blue.300"}
       bgImg={mobile ? "" : BgImage}
     >
+      <ModalPet
+        petId={0}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        isNew={true}
+      />
       <Header />
       <Box w="100%">
         <Flex
@@ -135,7 +145,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               justify="center"
               p="8"
               _hover={{ cursor: "pointer", transform: "scale(1.5)" }}
-              onClick={() => console.log("Abrir modal")}
+              onClick={onOpen}
             >
               <Image
                 src={PlusIcon}

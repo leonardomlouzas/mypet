@@ -8,7 +8,6 @@ import {
   useDisclosure,
   Badge,
 } from "@chakra-ui/react";
-import { FaEdit } from "react-icons/fa";
 import VaccineIcon from "../../assets/syringe-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
@@ -41,6 +40,8 @@ export const CardVaccine = ({
 
   const [vaccineId, setVaccineId] = useState(0);
 
+  const [isNew, setIsNew] = useState(false);
+
   const selected = pets.filter((item) => item.id === petId);
   const selectedVaccine = vaccines.filter((item) => item.idPet === petId);
 
@@ -48,11 +49,15 @@ export const CardVaccine = ({
     getVaccines(accessToken);
   });
 
-  const handler = (vaccineId: number) => {
-    console.log(vaccineId);
-    console.log(vaccines);
-    setVaccineId(vaccineId);
-    onOpen();
+  const handler = (vaccineId: number, state: boolean) => {
+    if (state) {
+      setIsNew(true);
+      onOpen();
+    } else {
+      setIsNew(false);
+      setVaccineId(vaccineId);
+      onOpen();
+    }
   };
 
   return (
@@ -62,6 +67,8 @@ export const CardVaccine = ({
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
+        isNew={isNew}
+        petId={petId}
       />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
@@ -107,7 +114,7 @@ export const CardVaccine = ({
                       src={PlusIcon}
                       w="50px"
                       h="30px"
-                      onClick={() => console.log("Abrir modal")}
+                      onClick={() => handler(0, true)}
                       _hover={{ cursor: "pointer" }}
                     />
                   </Flex>
@@ -132,7 +139,7 @@ export const CardVaccine = ({
                     justify="flex-start"
                     borderRadius="15px"
                     bg="gray.300"
-                    onClick={() => handler(item.id)}
+                    onClick={() => handler(item.id, false)}
                     _hover={{
                       borderRadius: "15px",
                       bg: "blue.300",
@@ -178,7 +185,7 @@ export const CardVaccine = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={() => handler(item.id)}
+                  onClick={() => handler(item.id, false)}
                 >
                   <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
                   <Box>
@@ -191,7 +198,14 @@ export const CardVaccine = ({
                 </Flex>
               ))}
             </Box>
-            <Center w="100%" h="70px" bg="yellow.300" p="5">
+            <Center
+              w="100%"
+              h="70px"
+              bg="yellow.300"
+              p="5"
+              onClick={() => handler(0, true)}
+              _hover={{ bg: "yellow.200" }}
+            >
               <Heading as="h4" size="md">
                 Adicionar Vacina
               </Heading>

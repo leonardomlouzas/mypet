@@ -39,6 +39,8 @@ export const CardPetshop = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [petShopId, setPetShopId] = useState(0);
 
+  const [isNew, setIsNew] = useState(false);
+
   const selected = pets.filter((item) => item.id === petId);
   const selectedPetShop = petShop.filter((item) => item.idPet === petId);
 
@@ -46,10 +48,15 @@ export const CardPetshop = ({
     getPetShop(accessToken);
   });
 
-  const handle = (id: number) => {
-    console.log(id);
-    setPetShopId(id);
-    onOpen();
+  const handle = (id: number, state: boolean) => {
+    if (state) {
+      setIsNew(true);
+      onOpen();
+    } else {
+      setIsNew(false);
+      setPetShopId(id);
+      onOpen();
+    }
   };
   return (
     <>
@@ -59,6 +66,7 @@ export const CardPetshop = ({
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
+        isNew={isNew}
       />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
@@ -123,7 +131,7 @@ export const CardPetshop = ({
                     w="100%"
                     align="center"
                     justify="flex-start"
-                    onClick={() => handle(item.id)}
+                    onClick={() => handle(item.id, false)}
                     borderRadius="15px"
                     bg="gray.300"
                     _hover={{
@@ -172,7 +180,7 @@ export const CardPetshop = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={onOpen}
+                  onClick={() => handle(item.id, false)}
                 >
                   <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
                   <Box>
@@ -185,7 +193,14 @@ export const CardPetshop = ({
                 </Flex>
               ))}
             </Box>
-            <Center w="100%" h="70px" bg="yellow.300" p="5">
+            <Center
+              w="100%"
+              h="70px"
+              bg="yellow.300"
+              p="5"
+              onClick={() => handle(0, true)}
+              _hover={{ bg: "yellow.200" }}
+            >
               <Heading as="h4" size="md">
                 Adicionar Serviço
               </Heading>

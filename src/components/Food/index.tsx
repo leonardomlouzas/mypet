@@ -32,6 +32,8 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [foodId, setFoodId] = useState(0);
 
+  const [isNew, setIsNew] = useState(false);
+
   const selected = pets.filter((item) => item.id === petId);
   const selectedFood = food.filter((item) => item.userId === user.id);
 
@@ -40,9 +42,15 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
     getFood(accessToken);
   }, []);
 
-  const handler = (id: number) => {
-    setFoodId(id);
-    onOpen();
+  const handler = (id: number, state: boolean) => {
+    if (state) {
+      setIsNew(true);
+      onOpen();
+    } else {
+      setIsNew(false);
+      setFoodId(id);
+      onOpen();
+    }
   };
 
   return (
@@ -52,6 +60,8 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
         isOpen={isOpen}
         onClose={onClose}
         onOpen={onOpen}
+        isNew={isNew}
+        petid={petId}
       />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
@@ -97,7 +107,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                       src={PlusIcon}
                       w="50px"
                       h="30px"
-                      onClick={() => console.log("Abrir modal")}
+                      onClick={() => handler(0, true)}
                       _hover={{ cursor: "pointer" }}
                     />
                   </Flex>
@@ -122,7 +132,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                     justify="flex-start"
                     borderRadius="15px"
                     bg="gray.300"
-                    onClick={() => handler(item.id)}
+                    onClick={() => handler(item.id, false)}
                     _hover={{
                       borderRadius: "15px",
                       bg: "blue.300",
@@ -179,7 +189,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={() => handler(item.id)}
+                  onClick={() => handler(item.id, false)}
                 >
                   <Image src={Utensils} w="35px" h="35px" mr="15px" />
                   <Box>
@@ -193,7 +203,14 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                 </Flex>
               ))}
             </Box>
-            <Center w="100%" h="70px" bg="yellow.300" p="5">
+            <Center
+              w="100%"
+              h="70px"
+              bg="yellow.300"
+              p="5"
+              onClick={() => handler(0, true)}
+              _hover={{ bg: "yellow.200" }}
+            >
               <Heading as="h4" size="md">
                 Adicionar Comida
               </Heading>
