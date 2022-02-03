@@ -32,6 +32,8 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
   const { pets, getPets } = usePets();
   const { accessToken, user } = useAuth();
 
+  const selected = pets.filter((item) => item.userId === user.id);
+
   useEffect(() => {
     getPets(accessToken, user.id);
   }, []);
@@ -53,7 +55,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
           w="100%"
           minH="400px"
         >
-          {pets.map((item, index) => (
+          {selected.map((item, index) => (
             <Flex
               key={index}
               direction={mobile ? "row" : "column"}
@@ -112,7 +114,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               </Box>
             </Flex>
           ))}
-          {mobile ? (
+          {selected ? (
             pets.length === 0 ? (
               <>
                 <Flex w="100vw" h="100%" bg="gray.200" justify="center">

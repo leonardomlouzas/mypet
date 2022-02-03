@@ -33,6 +33,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
   const [foodId, setFoodId] = useState(0);
 
   const selected = pets.filter((item) => item.id === petId);
+  const selectedFood = food.filter((item) => item.userId === user.id);
 
   useEffect(() => {
     console.log(accessToken);
@@ -78,7 +79,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                   <Box>
                     <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
-                    <Text>{selected[0].age}</Text>
+                    <Text>Idade: {selected[0].age}</Text>
                   </Box>
                   <Flex
                     direction="column"
@@ -111,45 +112,43 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                 mt="15px"
                 gap="15px"
               >
-                {food
-                  .filter((item) => item.userId === user.id)
-                  .map((item, index) => (
+                {selectedFood.map((item, index) => (
+                  <Flex
+                    key={index}
+                    direction="row"
+                    p="5"
+                    w="100%"
+                    align="center"
+                    justify="flex-start"
+                    borderRadius="15px"
+                    bg="gray.300"
+                    onClick={() => handler(item.id)}
+                    _hover={{
+                      borderRadius: "15px",
+                      bg: "blue.300",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Image src={Utensils} w="35px" h="35px" mr="15px" />
                     <Flex
-                      key={index}
-                      direction="row"
-                      p="5"
                       w="100%"
+                      justify="space-between"
                       align="center"
-                      justify="flex-start"
-                      borderRadius="15px"
-                      bg="gray.300"
-                      onClick={() => handler(item.id)}
-                      _hover={{
-                        borderRadius: "15px",
-                        bg: "blue.300",
-                        cursor: "pointer",
-                      }}
+                      gap="15px"
                     >
-                      <Image src={Utensils} w="35px" h="35px" mr="15px" />
-                      <Flex
-                        w="100%"
-                        justify="space-between"
-                        align="center"
-                        gap="15px"
-                      >
-                        <Box>
-                          <Heading as="h3" size="24px">
-                            {item.item?.toUpperCase()}
-                          </Heading>
-                          <Text>Quant: {item.quantity}</Text>
-                        </Box>
-                        <Box>
-                          <Text>R$ {item.price}</Text>
-                          <Text>Freq: {item.frequency}</Text>
-                        </Box>
-                      </Flex>
+                      <Box>
+                        <Heading as="h3" size="24px">
+                          {item.item?.toUpperCase()}
+                        </Heading>
+                        <Text>Quant: {item.quantity}</Text>
+                      </Box>
+                      <Box>
+                        <Text>R$ {item.price}</Text>
+                        <Text>Freq: {item.frequency}</Text>
+                      </Box>
                     </Flex>
-                  ))}
+                  </Flex>
+                ))}
               </Flex>
             </Flex>
           </Flex>
@@ -171,30 +170,28 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
               <Image src={ArrowIcon} w="30px" h="30px" onClick={closeFood} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
-              {food
-                .filter((item) => item.userId === user.id)
-                .map((item, index) => (
-                  <Flex
-                    key={index}
-                    direction="row"
-                    align="center"
-                    justify="flex-start"
-                    p="5"
-                    borderBottom="1px"
-                    w="100%"
-                    onClick={() => handler(item.id)}
-                  >
-                    <Image src={Utensils} w="35px" h="35px" mr="15px" />
-                    <Box>
-                      <Heading as="h3" size="16px">
-                        {item.item}
-                      </Heading>
-                      <Text>{item.quantity}</Text>
-                      <Text>{item.price}</Text>
-                      <Text>{item.frequency}</Text>
-                    </Box>
-                  </Flex>
-                ))}
+              {selectedFood.map((item, index) => (
+                <Flex
+                  key={index}
+                  direction="row"
+                  align="center"
+                  justify="flex-start"
+                  p="5"
+                  borderBottom="1px"
+                  w="100%"
+                  onClick={() => handler(item.id)}
+                >
+                  <Image src={Utensils} w="35px" h="35px" mr="15px" />
+                  <Box>
+                    <Heading as="h3" size="16px">
+                      {item.item}
+                    </Heading>
+                    <Text>Quant:{item.quantity}</Text>
+                    <Text>R$ {item.price}</Text>
+                    <Text>Freq: {item.frequency}</Text>
+                  </Box>
+                </Flex>
+              ))}
             </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
               <Heading as="h4" size="md">

@@ -49,6 +49,8 @@ export const CardVaccine = ({
   });
 
   const handler = (vaccineId: number) => {
+    console.log(vaccineId);
+    console.log(vaccines);
     setVaccineId(vaccineId);
     onOpen();
   };
@@ -87,7 +89,7 @@ export const CardVaccine = ({
                   <Box>
                     <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
-                    <Text>{selected[0].age}</Text>
+                    <Text>Idade: {selected[0].age}</Text>
                   </Box>
                   <Flex
                     direction="column"

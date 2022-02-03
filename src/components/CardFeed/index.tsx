@@ -17,6 +17,7 @@ import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
 import { ModalFeed } from "../ModalFeed";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/ContextAuth";
 
 interface FeedProps {
   petName: string;
@@ -38,10 +39,15 @@ export const CardFeed = ({
   race,
   specie,
 }: FeedProps) => {
-  const { pets } = usePets();
+  const { accessToken, user } = useAuth();
+  const { pets, getPets } = usePets();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const selected = pets.filter((item) => item.id === petId);
+
+  useEffect(() => {
+    getPets(accessToken, user.id);
+  }, []);
 
   return (
     <>
@@ -82,7 +88,7 @@ export const CardFeed = ({
                   <Box>
                     <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
-                    <Text>{selected[0].age}</Text>
+                    <Text>Idade: {selected[0].age}</Text>
                   </Box>
                   <Flex direction="column" justify="space-between">
                     <Image

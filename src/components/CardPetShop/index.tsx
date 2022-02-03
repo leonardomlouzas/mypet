@@ -37,7 +37,7 @@ export const CardPetshop = ({
   const { accessToken } = useAuth();
   const { pets } = usePets();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [petShopId, setPetShoId] = useState(0);
+  const [petShopId, setPetShopId] = useState(0);
 
   const selected = pets.filter((item) => item.id === petId);
   const selectedPetShop = petShop.filter((item) => item.idPet === petId);
@@ -47,7 +47,8 @@ export const CardPetshop = ({
   });
 
   const handle = (id: number) => {
-    setPetShoId(id);
+    console.log(id);
+    setPetShopId(id);
     onOpen();
   };
   return (
@@ -85,7 +86,7 @@ export const CardPetshop = ({
                   <Box>
                     <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
-                    <Text>{selected[0].age}</Text>
+                    <Text>Idade: {selected[0].age}</Text>
                   </Box>
                   <Flex direction="column" justify="space-between">
                     <Image
