@@ -37,7 +37,7 @@ export const CardPetshop = ({
   const { accessToken } = useAuth();
   const { pets } = usePets();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [petShopId, setPetShoId] = useState(0);
+  const [petShopId, setPetShopId] = useState(0);
 
   const [isNew, setIsNew] = useState(false);
 
@@ -54,22 +54,22 @@ export const CardPetshop = ({
       onOpen();
     } else {
       setIsNew(false);
-      setPetShoId(id);
+      setPetShopId(id);
       onOpen();
     }
   };
   return (
     <>
+      <ModalPetshop
+        petShopId={petShopId}
+        petId={petId}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        isNew={isNew}
+      />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
-          <ModalPetshop
-            petShopId={petShopId}
-            petId={petId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            isNew={isNew}
-          />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -94,7 +94,7 @@ export const CardPetshop = ({
                   <Box>
                     <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
-                    <Text>{selected[0].age}</Text>
+                    <Text>Idade: {selected[0].age}</Text>
                   </Box>
                   <Flex direction="column" justify="space-between">
                     <Image
@@ -156,14 +156,6 @@ export const CardPetshop = ({
         </Box>
       ) : (
         <>
-          <ModalPetshop
-            petShopId={petShopId}
-            petId={petId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            isNew={isNew}
-          />
           <Box w="100vw" h="100vh">
             <Flex
               align="center"
@@ -171,17 +163,20 @@ export const CardPetshop = ({
               bg="blue.300"
               w="100%"
               h="70px"
+              p="5"
             >
               <Heading as="h2" size="32px">
                 {petName.toUpperCase()}
               </Heading>
-              <Image src={ArrowIcon} w="50px" h="30px" onClick={closePetShop} />
+              <Image src={ArrowIcon} w="30px" h="30px" onClick={closePetShop} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
               {selectedPetShop.map((item, index) => (
                 <Flex
                   key={index}
                   direction="row"
+                  align="center"
+                  justify="flex-start"
                   p="5"
                   borderBottom="1px"
                   w="100%"
@@ -189,15 +184,24 @@ export const CardPetshop = ({
                 >
                   <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
                   <Box>
-                    <Heading as="h3">{item.service}</Heading>
+                    <Heading as="h3" size="16px">
+                      {item.service}
+                    </Heading>
                     <Text>{item.date}</Text>
-                    <Text>{item.price}</Text>
+                    <Text>Valor: R$ {item.price},00</Text>
                   </Box>
                 </Flex>
               ))}
             </Box>
-            <Center w="100%" h="70px" bg="yellow.300" p="5">
-              <Heading as="h4" onClick={() => handle(0, true)}>
+            <Center
+              w="100%"
+              h="70px"
+              bg="yellow.300"
+              p="5"
+              onClick={() => handle(0, true)}
+              _hover={{ bg: "yellow.200" }}
+            >
+              <Heading as="h4" size="md">
                 Adicionar Serviço
               </Heading>
             </Center>

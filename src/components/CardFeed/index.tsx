@@ -17,6 +17,7 @@ import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
 import { ModalFeed } from "../ModalFeed";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/ContextAuth";
 
 interface FeedProps {
   petId: number;
@@ -31,30 +32,21 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
 
   const selected = pets.filter((item) => item.id === petId);
 
-  const handle = (state: boolean) => {
-    if (state) {
-      setIsNew(true);
-      onOpen();
-    } else {
-      setIsNew(false);
-      onOpen();
-    }
-  };
   return (
     <>
+      <ModalFeed
+        petId={petId}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        oldAge={selected[0].age}
+        oldImg={selected[0].img_url}
+        oldNome={selected[0].nome}
+        oldRace={selected[0].race}
+        oldSpecie={selected[0].specie}
+      />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
-          <ModalFeed
-            petId={selected[0].id}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            oldAge={selected[0].age}
-            oldImg={selected[0].img_url}
-            oldNome={selected[0].nome}
-            oldRace={selected[0].race}
-            oldSpecie={selected[0].specie}
-          />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -79,7 +71,7 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
                   <Box>
                     <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
-                    <Text>{selected[0].age}</Text>
+                    <Text>Idade: {selected[0].age}</Text>
                   </Box>
                   <Flex direction="column" justify="space-between">
                     <Image
@@ -110,6 +102,7 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
               >
                 {selected.map((item, index) => (
                   <Flex
+                    onClick={onOpen}
                     key={index}
                     direction="row"
                     p="5"
@@ -139,17 +132,6 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
         </Box>
       ) : (
         <>
-          <ModalFeed
-            petId={petId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            oldAge={selected[0].age}
-            oldImg={selected[0].img_url}
-            oldNome={selected[0].nome}
-            oldRace={selected[0].race}
-            oldSpecie={selected[0].specie}
-          />
           <Box w="100vw" h="100vh">
             <Flex
               align="center"
@@ -157,13 +139,14 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
               bg="blue.300"
               w="100%"
               h="70px"
+              p="5"
             >
               <Heading as="h2" size="32px">
                 {selected[0].nome.toUpperCase()}
               </Heading>
               <Image
                 src={ArrowIcon}
-                w="50px"
+                w="30px"
                 h="30px"
                 onClick={closeFeed}
                 _hover={{ cursor: "pointer" }}
@@ -174,14 +157,18 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
                 <Flex
                   key={index}
                   direction="row"
+                  align="center"
+                  justify="flex-start"
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={() => handle(false)}
+                  onClick={onOpen}
                 >
                   <Image src={Bowl} w="35px" h="35px" mr="15px" />
                   <Box>
-                    <Heading as="h3">{item.feed?.frequency}</Heading>
+                    <Heading as="h3" size="16px">
+                      {item.feed?.frequency}
+                    </Heading>
                     <Text>{item.feed?.time}</Text>
                   </Box>
                 </Flex>
