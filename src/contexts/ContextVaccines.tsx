@@ -20,6 +20,7 @@ interface Vaccines {
   idPet?: number;
   status: boolean;
   id: number;
+  userId?: number;
 }
 
 interface VaccinesProvidersData {

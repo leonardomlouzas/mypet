@@ -21,6 +21,8 @@ interface ModalVaccinesProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  isNew: boolean;
+  petId: number;
 }
 interface FormEditData {
   vaccine_name: string;
@@ -37,6 +39,7 @@ interface Vaccines {
   petId?: number;
   status: boolean;
   id: number;
+  userId?: number;
 }
 
 export const ModalVaccine = ({
@@ -44,9 +47,11 @@ export const ModalVaccine = ({
   isOpen,
   onOpen,
   onClose,
+  isNew,
+  petId,
 }: ModalVaccinesProps) => {
-  const { accessToken } = useAuth();
-  const { editVaccine, removeVaccine } = useVaccine();
+  const { accessToken, user } = useAuth();
+  const { registerVaccine, editVaccine, removeVaccine } = useVaccine();
 
   const schemaEdit = yup.object().shape({
     vaccine_name: yup.string().required(),
@@ -62,6 +67,27 @@ export const ModalVaccine = ({
   } = useForm<FormEditData>({
     resolver: yupResolver(schemaEdit),
   });
+
+  const handleNew = ({
+    vaccine_name,
+    date,
+    expiration,
+    price,
+  }: FormEditData) => {
+    const newVaccine = {
+      vaccine_name: vaccine_name,
+      date: JSON.stringify(date),
+      expiration: JSON.stringify(expiration),
+      price: price,
+      status: false,
+      idPet: petId,
+      userId: user.id,
+      id: 0,
+    };
+
+    registerVaccine(newVaccine as Vaccines, accessToken);
+    onClose();
+  };
 
   const handleEdit = ({
     vaccine_name,
@@ -97,9 +123,12 @@ export const ModalVaccine = ({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Editar</ModalHeader>
+          <ModalHeader>{isNew ? "Adicionar" : "Editar"}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody as="form" onSubmit={handleSubmit(handleEdit)}>
+          <ModalBody
+            as="form"
+            onSubmit={handleSubmit(isNew ? handleNew : handleEdit)}
+          >
             <VStack alignItems="flex-start">
               <Input
                 label="Nome da vacina"
@@ -135,7 +164,9 @@ export const ModalVaccine = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleDelete(vaccineId)}>Deletar</Button>
+            {!isNew && (
+              <Button onClick={() => handleDelete(vaccineId)}>Deletar</Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
