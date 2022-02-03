@@ -21,7 +21,7 @@ export const Header = ({}) => {
             MyPets
           </Heading>
         </Flex>
-        <Image src={SignOutIcon} w="40px" h="40px" onClick={signOut} />
+        <Image src={SignOutIcon} w="40px" h="40px" onClick={signOut} cursor="pointer" />
       </Flex>
     </Flex>
   );
