@@ -37,7 +37,6 @@ export const Dashboard = () => {
     setPetAge(age);
     setPetRace(race);
     setPetSpecie(specie);
-    console.log("funcionou");
   };
 
   const backButton = () => {

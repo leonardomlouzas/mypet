@@ -16,6 +16,7 @@ import PlusIcon from "../../assets/plus-solid.svg";
 import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
 import { ModalFeed } from "../ModalFeed";
+import { useEffect, useState } from "react";
 
 interface FeedProps {
   petName: string;
@@ -110,7 +111,7 @@ export const CardFeed = ({
                 mt="15px"
                 gap="15px"
               >
-                {pets.map((item, index) => (
+                {selected.map((item, index) => (
                   <Flex
                     key={index}
                     direction="row"
