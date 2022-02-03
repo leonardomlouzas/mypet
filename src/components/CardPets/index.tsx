@@ -67,6 +67,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               p="5"
               bg="gray.200"
               gap="15px"
+              boxShadow="dark-lg"
               onClick={() =>
                 open(
                   item.id,
@@ -77,7 +78,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
                   item.specie
                 )
               }
-              _hover={mobile ? { bg: "blue.300" } : {}}
+              _hover={mobile ? {} : { bg: "yellow.300", cursor: "pointer" }}
             >
               <Image
                 src={item.img_url}
@@ -101,6 +102,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
                   justify="start"
                   m="0 auto"
                   w="100%"
+                  gap="10px"
                 >
                   <Badge bg="yellow.200" mb="5px">
                     {item.specie}
@@ -130,10 +132,19 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               align="center"
               justify="center"
               p="8"
-              _hover={{ color: "yellow.200" }}
+              _hover={{ cursor: "pointer", transform: "scale(1.5)" }}
+              onClick={() => console.log("Abrir modal")}
             >
-              <Image src={PlusIcon} alt="Adicionar" w="50px" h="50px" />
-              <Text fontWeight="bold">Adicione seu amigo</Text>
+              <Image
+                src={PlusIcon}
+                alt="Adicionar"
+                w="80px"
+                h="50px"
+                color="yellow.300"
+              />
+              {pets.length === 0 ?? (
+                <Text fontWeight="bold">Adicione seu amigo</Text>
+              )}
             </Flex>
           )}
         </Flex>

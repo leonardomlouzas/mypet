@@ -12,6 +12,7 @@ import { FaEdit } from "react-icons/fa";
 import VaccineIcon from "../../assets/syringe-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
+import PlusIcon from "../../assets/plus-solid.svg";
 import { useVaccine } from "../../contexts/ContextVaccines";
 import { Header } from "../Header";
 import { useEffect, useState } from "react";
@@ -71,6 +72,7 @@ export const CardVaccine = ({
               borderRadius="20px"
               w="600px"
               mt="25px"
+              boxShadow="dark-lg"
             >
               <Flex borderBottom="1px" pb="15px">
                 <Image
@@ -87,7 +89,7 @@ export const CardVaccine = ({
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
-                  <Box>
+                  <Flex direction="column" justify="space-between">
                     <Image
                       src={ArrowIcon}
                       w="50px"
@@ -95,7 +97,14 @@ export const CardVaccine = ({
                       onClick={closeVaccine}
                       _hover={{ cursor: "pointer" }}
                     />
-                  </Box>
+                    <Image
+                      src={PlusIcon}
+                      w="50px"
+                      h="30px"
+                      onClick={() => console.log("Abrir modal")}
+                      _hover={{ cursor: "pointer" }}
+                    />
+                  </Flex>
                 </Flex>
               </Flex>
               <Flex
