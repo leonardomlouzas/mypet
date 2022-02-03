@@ -8,7 +8,6 @@ import {
   useDisclosure,
   Badge,
 } from "@chakra-ui/react";
-import { FaEdit } from "react-icons/fa";
 import VaccineIcon from "../../assets/syringe-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
@@ -41,6 +40,8 @@ export const CardVaccine = ({
 
   const [vaccineId, setVaccineId] = useState(0);
 
+  const [isNew, setIsNew] = useState(false);
+
   const selected = pets.filter((item) => item.id === petId);
   const selectedVaccine = vaccines.filter((item) => item.idPet === petId);
 
@@ -48,9 +49,15 @@ export const CardVaccine = ({
     getVaccines(accessToken);
   });
 
-  const handler = (vaccineId: number) => {
-    setVaccineId(vaccineId);
-    onOpen();
+  const handler = (vaccineId: number, state: boolean) => {
+    if (state) {
+      setIsNew(true);
+      onOpen();
+    } else {
+      setIsNew(false);
+      setVaccineId(vaccineId);
+      onOpen();
+    }
   };
 
   return (
@@ -62,6 +69,8 @@ export const CardVaccine = ({
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
+            isNew={isNew}
+            petId={petId}
           />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
@@ -126,7 +135,7 @@ export const CardVaccine = ({
                     justify="flex-start"
                     borderRadius="15px"
                     bg="gray.300"
-                    onClick={() => handler(item.id)}
+                    onClick={() => handler(item.id, false)}
                     _hover={{
                       borderRadius: "15px",
                       bg: "blue.300",
@@ -154,6 +163,8 @@ export const CardVaccine = ({
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
+            isNew={isNew}
+            petId={petId}
           />
           <Box w="100vw" h="100vh">
             <Flex
@@ -177,7 +188,7 @@ export const CardVaccine = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={() => handler(item.id)}
+                  onClick={() => handler(item.id, false)}
                 >
                   <Image src={VaccineIcon} w="35px" h="35px" mr="15px" />
                   <Box>
@@ -191,7 +202,7 @@ export const CardVaccine = ({
               ))}
             </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
-              <Heading as="h4" size="md">
+              <Heading as="h4" size="md" onClick={() => handler(0, true)}>
                 Adicionar Vacina
               </Heading>
             </Center>
