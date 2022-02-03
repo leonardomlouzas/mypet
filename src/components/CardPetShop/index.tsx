@@ -39,6 +39,8 @@ export const CardPetshop = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [petShopId, setPetShoId] = useState(0);
 
+  const [isNew, setIsNew] = useState(false);
+
   const selected = pets.filter((item) => item.id === petId);
   const selectedPetShop = petShop.filter((item) => item.idPet === petId);
 
@@ -46,9 +48,15 @@ export const CardPetshop = ({
     getPetShop(accessToken);
   });
 
-  const handle = (id: number) => {
-    setPetShoId(id);
-    onOpen();
+  const handle = (id: number, state: boolean) => {
+    if (state) {
+      setIsNew(true);
+      onOpen();
+    } else {
+      setIsNew(false);
+      setPetShoId(id);
+      onOpen();
+    }
   };
   return (
     <>
@@ -60,6 +68,7 @@ export const CardPetshop = ({
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
+            isNew={isNew}
           />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
@@ -122,7 +131,7 @@ export const CardPetshop = ({
                     w="100%"
                     align="center"
                     justify="flex-start"
-                    onClick={() => handle(item.id)}
+                    onClick={() => handle(item.id, false)}
                     borderRadius="15px"
                     bg="gray.300"
                     _hover={{
@@ -153,6 +162,7 @@ export const CardPetshop = ({
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
+            isNew={isNew}
           />
           <Box w="100vw" h="100vh">
             <Flex
@@ -175,7 +185,7 @@ export const CardPetshop = ({
                   p="5"
                   borderBottom="1px"
                   w="100%"
-                  onClick={onOpen}
+                  onClick={() => handle(item.id, false)}
                 >
                   <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
                   <Box>
@@ -187,7 +197,9 @@ export const CardPetshop = ({
               ))}
             </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
-              <Heading as="h4">Adicionar Serviço</Heading>
+              <Heading as="h4" onClick={() => handle(0, true)}>
+                Adicionar Serviço
+              </Heading>
             </Center>
           </Box>
         </>

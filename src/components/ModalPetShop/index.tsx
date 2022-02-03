@@ -26,6 +26,7 @@ interface PetShopModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  isNew: boolean;
 }
 
 interface FormEditData {
@@ -53,10 +54,11 @@ export const ModalPetshop = ({
   isOpen,
   onOpen,
   onClose,
+  isNew,
 }: PetShopModalProps) => {
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
 
-  const { editPetShop, deletePetShop } = usePetShop();
+  const { registerPetShop, editPetShop, deletePetShop } = usePetShop();
 
   const schemaEdit = yup.object().shape({
     service: yup.string().required(),
@@ -72,6 +74,20 @@ export const ModalPetshop = ({
   } = useForm<FormEditData>({
     resolver: yupResolver(schemaEdit),
   });
+
+  const handleNew = ({ service, date, price, frequency }: FormEditData) => {
+    const newPetShop = {
+      service: service,
+      date: JSON.stringify(date),
+      price: price,
+      frequency: frequency,
+      idPet: petId,
+      status: true,
+      userId: user.id,
+    };
+    registerPetShop(newPetShop as PetShop, accessToken);
+    onClose();
+  };
 
   const handleEdit = ({ service, date, price, frequency }: FormEditData) => {
     const newPetShop = {
@@ -101,9 +117,12 @@ export const ModalPetshop = ({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Editar</ModalHeader>
+          <ModalHeader>{isNew ? "Adicionar" : "Editar"}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody as="form" onSubmit={handleSubmit(handleEdit)}>
+          <ModalBody
+            as="form"
+            onSubmit={handleSubmit(isNew ? handleNew : handleEdit)}
+          >
             <VStack alignItems="flex-start">
               <Input
                 label="Tipo de serviço"
@@ -146,7 +165,9 @@ export const ModalPetshop = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleDelete(2)}>Deletar</Button>
+            {!isNew && (
+              <Button onClick={() => handleDelete(petShopId)}>Deletar</Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
