@@ -15,6 +15,7 @@ import StoreIcon from "../../assets/store-alt-solid.svg";
 import UtensilsIcon from "../../assets/utensils-solid.svg";
 import BgImage from "../../assets/background.png";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
+import EngineIcon from "../../assets/cog-solid.svg";
 
 import { ModalPet } from "../ModalPet";
 import { Header } from "../Header";
@@ -48,10 +49,16 @@ export const CardPetOpen = ({
   return (
     //mobileCode
     <>
+      <ModalPet
+        petId={petId}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+      />
       {mobile ? (
         <Box w="100vw" h="100vh" bg={"blue.300"} bgImg={BgImage}>
           <Header />
-          <Flex justify="center" mt="25px">
+          <Flex justify="center" mt="25px" p="5">
             <Box
               borderRadius="20px"
               bg="gray.200"
@@ -78,14 +85,26 @@ export const CardPetOpen = ({
                       Idade: {selected[0].age}
                     </Heading>
                   </Box>
-                  <Box w="10%">
+                  <Flex
+                    w="10%"
+                    direction="column"
+                    align="center"
+                    justify="space-between"
+                    h="100%"
+                  >
                     <Image
                       src={ArrowIcon}
                       w="50px"
                       h="40px"
                       onClick={returnToDesktop}
                     />
-                  </Box>
+                    <Image
+                      src={EngineIcon}
+                      w="50px"
+                      h="40px"
+                      onClick={onOpen}
+                    />
+                  </Flex>
                 </Flex>
               </Flex>
               <Flex
@@ -95,71 +114,83 @@ export const CardPetOpen = ({
                 p="5"
                 mt="15px"
                 mb="15px"
+                wrap="wrap"
+                gap="35px"
               >
                 <Flex
+                  direction="column"
+                  fontWeight="bold"
                   bg="yellow.300"
                   borderRadius="20px"
-                  w="100px"
+                  w="120px"
                   h="120px"
                   onClick={enterVaccine}
                   _hover={{ bg: "yellow.200" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
+                  flex="1 1 30px"
                 >
                   <Image src={SyringeIcon} w="60px" h="60px" />
+                  <Text>Vacinas</Text>
                 </Flex>
                 <Flex
+                  direction="column"
+                  fontWeight="bold"
                   bg="yellow.300"
                   borderRadius="20px"
-                  w="100px"
+                  w="120px"
                   h="120px"
                   onClick={enterPetShop}
                   _hover={{ bg: "yellow.200" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
+                  flex="1 1 30px"
                 >
-                  <Image src={UtensilsIcon} w="60px" h="60px" />
+                  <Image src={StoreIcon} w="60px" h="60px" />
+                  <Text>Pet Shop</Text>
                 </Flex>
                 <Flex
+                  direction="column"
+                  fontWeight="bold"
                   bg="yellow.300"
                   borderRadius="20px"
-                  w="100px"
+                  w="120px"
                   h="120px"
                   onClick={enterFeed}
                   _hover={{ bg: "yellow.200" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
+                  flex="1 1 30px"
                 >
                   <Image src={BowlIcon} w="60px" h="60px" />
+                  <Text>Alimentação</Text>
                 </Flex>
                 <Flex
+                  direction="column"
+                  fontWeight="bold"
                   bg="yellow.300"
                   borderRadius="20px"
-                  w="100px"
+                  w="120px"
                   h="120px"
                   onClick={enterFood}
                   _hover={{ bg: "yellow.200" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
+                  flex="1 1 30px"
                 >
-                  <Image src={StoreIcon} w="60px" h="60px" />
+                  <Image src={UtensilsIcon} w="60px" h="60px" />
+                  <Text>Estoque</Text>
                 </Flex>
               </Flex>
             </Box>
           </Flex>
         </Box>
       ) : (
-        <Box w="320px" bg="gray.200">
-          <ModalPet
-            petId={petId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-          />
+        <Box w="100vw" bg="gray.200">
           <Flex
             w="100%"
             h="70px"
