@@ -13,8 +13,8 @@ import { Header } from "../Header";
 
 import { usePets } from "../../contexts/ContextPets";
 import { useAuth } from "../../contexts/ContextAuth";
+import PlusIcon from "../../assets/plus-solid.svg";
 
-import VenusIcon from "../../assets/venus-solid.svg";
 import BgImage from "../../assets/background.png";
 interface CardPetProps {
   mobile: boolean;
@@ -48,6 +48,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
         <Flex
           justify="center"
           align="center"
+          direction={mobile ? "column" : "row"}
           mt={mobile ? "" : "25px"}
           w="100%"
           minH="400px"
@@ -57,14 +58,16 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               key={index}
               direction={mobile ? "row" : "column"}
               align="center"
-              justify="space-evenly"
+              justify="flex-start"
               borderRadius={mobile ? "0px" : "20px"}
-              border={mobile ? "0px" : "1px"}
+              borderBottom={mobile && pets.length > 1 ? "1px" : "0px"}
               w={mobile ? "100%" : "300px"}
               mb={mobile ? "10px" : "0px"}
               mr={mobile ? "0px" : "10px"}
               p="5"
               bg="gray.200"
+              gap="15px"
+              boxShadow="dark-lg"
               onClick={() =>
                 open(
                   item.id,
@@ -75,7 +78,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
                   item.specie
                 )
               }
-              _hover={mobile ? { bg: "blue.300" } : {}}
+              _hover={mobile ? {} : { bg: "yellow.300", cursor: "pointer" }}
             >
               <Image
                 src={item.img_url}
@@ -92,27 +95,69 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
                   <Heading as="h3" size="md">
                     {item.nome}
                   </Heading>
-                  <Image src={VenusIcon} w="30px" h="30px" />
                 </Flex>
                 <Flex
                   direction="column"
                   align="start"
-                  justify="center"
-                  mb="15px"
+                  justify="start"
+                  m="0 auto"
                   w="100%"
+                  gap="10px"
                 >
                   <Badge bg="yellow.200" mb="5px">
                     {item.specie}
                   </Badge>
-                  <Text>{item.age} anos</Text>
+                  <Text>Idade: {item.age} anos</Text>
                 </Flex>
               </Box>
             </Flex>
           ))}
+          {mobile ? (
+            pets.length === 0 ? (
+              <>
+                <Flex w="100vw" h="100%" bg="gray.200" justify="center">
+                  <Text align="center" fontWeight="bold">
+                    Sem pets
+                    <br />
+                    Adicione algum
+                  </Text>
+                </Flex>
+              </>
+            ) : (
+              <></>
+            )
+          ) : (
+            <Flex
+              direction="column"
+              align="center"
+              justify="center"
+              p="8"
+              _hover={{ cursor: "pointer", transform: "scale(1.5)" }}
+              onClick={() => console.log("Abrir modal")}
+            >
+              <Image
+                src={PlusIcon}
+                alt="Adicionar"
+                w="80px"
+                h="50px"
+                color="yellow.300"
+              />
+              {pets.length === 0 ?? (
+                <Text fontWeight="bold">Adicione seu amigo</Text>
+              )}
+            </Flex>
+          )}
         </Flex>
       </Box>
       {mobile ? (
-        <Center w="100%" h="70px" bg="yellow.300" p="5">
+        <Center
+          w="100%"
+          h="70px"
+          bg="yellow.300"
+          p="5"
+          _hover={{ bg: "yellow.200", cursor: "pointer" }}
+          fontWeight="bold"
+        >
           Adicionar Pet
         </Center>
       ) : (

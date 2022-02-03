@@ -21,6 +21,8 @@ import { ModalPet } from "../ModalPet";
 import { Header } from "../Header";
 
 import { usePets } from "../../contexts/ContextPets";
+import { useAuth } from "../../contexts/ContextAuth";
+import { useEffect } from "react";
 
 interface CardPetOpenProps {
   petId: number;
@@ -41,10 +43,15 @@ export const CardPetOpen = ({
   enterFeed,
   enterFood,
 }: CardPetOpenProps) => {
-  const { pets } = usePets();
+  const { pets, getPets } = usePets();
+  const { accessToken, user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const selected = pets.filter((item) => item.id === petId);
+
+  useEffect(() => {
+    getPets(accessToken, user.id);
+  }, []);
 
   return (
     //mobileCode
@@ -76,11 +83,13 @@ export const CardPetOpen = ({
                 <Flex w="100%" justify="space-between">
                   <Box>
                     <Flex>
-                      <Heading as="h2">{selected[0].nome}</Heading>
+                      <Heading as="h2">
+                        {selected[0].nome.toUpperCase()}
+                      </Heading>
                     </Flex>
-                    <Heading as="h3" size="24px">
-                      Espécie: {selected[0].specie}
-                    </Heading>
+                    <Badge as="h3" bg="yellow.300">
+                      {selected[0].specie.toUpperCase()}
+                    </Badge>
                     <Heading as="h4" size="18px">
                       Idade: {selected[0].age}
                     </Heading>
@@ -97,12 +106,14 @@ export const CardPetOpen = ({
                       w="50px"
                       h="40px"
                       onClick={returnToDesktop}
+                      _hover={{ cursor: "pointer" }}
                     />
                     <Image
                       src={EngineIcon}
                       w="50px"
                       h="40px"
                       onClick={onOpen}
+                      _hover={{ cursor: "pointer" }}
                     />
                   </Flex>
                 </Flex>
@@ -125,7 +136,7 @@ export const CardPetOpen = ({
                   w="120px"
                   h="120px"
                   onClick={enterVaccine}
-                  _hover={{ bg: "yellow.200" }}
+                  _hover={{ bg: "yellow.200", cursor: "pointer" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
@@ -142,7 +153,7 @@ export const CardPetOpen = ({
                   w="120px"
                   h="120px"
                   onClick={enterPetShop}
-                  _hover={{ bg: "yellow.200" }}
+                  _hover={{ bg: "yellow.200", cursor: "pointer" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
@@ -159,7 +170,7 @@ export const CardPetOpen = ({
                   w="120px"
                   h="120px"
                   onClick={enterFeed}
-                  _hover={{ bg: "yellow.200" }}
+                  _hover={{ bg: "yellow.200", cursor: "pointer" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
@@ -176,7 +187,7 @@ export const CardPetOpen = ({
                   w="120px"
                   h="120px"
                   onClick={enterFood}
-                  _hover={{ bg: "yellow.200" }}
+                  _hover={{ bg: "yellow.200", cursor: "pointer" }}
                   align="center"
                   justify="center"
                   boxShadow="lg"
@@ -200,7 +211,7 @@ export const CardPetOpen = ({
             p="5"
           >
             <Heading as="h2" size={mobile ? "32px" : "32px"}>
-              {selected[0].nome}
+              {selected[0].nome.toUpperCase()}
             </Heading>
             <Image
               src={ArrowIcon}
@@ -222,9 +233,8 @@ export const CardPetOpen = ({
             <Box>
               <Flex>
                 <Heading as="h2" size={mobile ? "24px" : "16px"}>
-                  {selected[0].nome}
+                  {selected[0].nome.toUpperCase()}
                 </Heading>
-                {/* <Image src={VenusIcon} h="50px" w="50px" /> */}
               </Flex>
               <Badge bg="yellow.300">{selected[0].specie}</Badge>
               <Text>Idade: {selected[0].age} anos</Text>

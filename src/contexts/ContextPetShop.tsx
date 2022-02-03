@@ -19,7 +19,9 @@ interface PetShop {
   date?: string;
   frequency?: string;
   userId: number;
+  idPet: number;
   status: boolean;
+  id: number;
 }
 interface PetShopProviderData {
   petShop: PetShop[];

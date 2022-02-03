@@ -6,11 +6,13 @@ import {
   Text,
   Center,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import VaccineIcon from "../../assets/syringe-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
+import PlusIcon from "../../assets/plus-solid.svg";
 import { useVaccine } from "../../contexts/ContextVaccines";
 import { Header } from "../Header";
 import { useEffect, useState } from "react";
@@ -40,6 +42,7 @@ export const CardVaccine = ({
   const [vaccineId, setVaccineId] = useState(0);
 
   const selected = pets.filter((item) => item.id === petId);
+  const selectedVaccine = vaccines.filter((item) => item.idPet === petId);
 
   useEffect(() => {
     getVaccines(accessToken);
@@ -68,6 +71,8 @@ export const CardVaccine = ({
               bg="white"
               borderRadius="20px"
               w="600px"
+              mt="25px"
+              boxShadow="dark-lg"
             >
               <Flex borderBottom="1px" pb="15px">
                 <Image
@@ -80,36 +85,47 @@ export const CardVaccine = ({
                 />
                 <Flex justify="space-between" w="100%">
                   <Box>
-                    <Heading as="h3">{selected[0].nome}</Heading>
-                    <Text>{selected[0].specie}</Text>
+                    <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
+                    <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
-                  <Box>
+                  <Flex direction="column" justify="space-between">
                     <Image
                       src={ArrowIcon}
                       w="50px"
                       h="30px"
                       onClick={closeVaccine}
+                      _hover={{ cursor: "pointer" }}
                     />
-                  </Box>
+                    <Image
+                      src={PlusIcon}
+                      w="50px"
+                      h="30px"
+                      onClick={() => console.log("Abrir modal")}
+                      _hover={{ cursor: "pointer" }}
+                    />
+                  </Flex>
                 </Flex>
               </Flex>
               <Flex
-                bg="gray.300"
-                borderRadius="15px"
                 w="80%"
+                direction="column"
                 align="center"
                 justify="center"
                 m="0 auto"
                 mt="15px"
+                gap="15px"
               >
-                {vaccines.map((item, index) => (
+                {selectedVaccine.map((item, index) => (
                   <Flex
                     key={index}
                     direction="row"
                     p="5"
                     w="100%"
-                    justify="space-evenly"
+                    align="center"
+                    justify="flex-start"
+                    borderRadius="15px"
+                    bg="gray.300"
                     onClick={() => handler(item.id)}
                     _hover={{
                       borderRadius: "15px",
@@ -122,8 +138,8 @@ export const CardVaccine = ({
                       <Heading as="h3" size="24px">
                         {item.vaccine_name}
                       </Heading>
-                      <Text>{item.date}</Text>
-                      <Text>{item.expiration}</Text>
+                      <Text>Data:{item.date}</Text>
+                      <Text>Exp:{item.expiration}</Text>
                     </Box>
                   </Flex>
                 ))}
@@ -147,11 +163,13 @@ export const CardVaccine = ({
               w="100%"
               h="70px"
             >
-              <Heading as="h2">{petName}</Heading>
+              <Heading as="h2" size="32px">
+                {petName.toUpperCase()}
+              </Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closeVaccine} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
-              {vaccines.map((item, index) => (
+              {selectedVaccine.map((item, index) => (
                 <Flex
                   key={index}
                   direction="row"

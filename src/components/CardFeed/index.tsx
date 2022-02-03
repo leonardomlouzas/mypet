@@ -5,14 +5,18 @@ import {
   Heading,
   Image,
   Text,
+  Badge,
   useDisclosure,
 } from "@chakra-ui/react";
 import Bowl from "../../assets/bowl-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
+import PlusIcon from "../../assets/plus-solid.svg";
+
 import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
 import { ModalFeed } from "../ModalFeed";
+import { useEffect, useState } from "react";
 
 interface FeedProps {
   petName: string;
@@ -62,6 +66,8 @@ export const CardFeed = ({
               bg="white"
               borderRadius="20px"
               w="600px"
+              mt="25px"
+              boxShadow="dark-lg"
             >
               <Flex borderBottom="1px" pb="15px">
                 <Image
@@ -74,44 +80,59 @@ export const CardFeed = ({
                 />
                 <Flex justify="space-between" w="100%">
                   <Box>
-                    <Heading as="h3">{selected[0].nome}</Heading>
-                    <Text>{selected[0].specie}</Text>
+                    <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
+                    <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
-                  <Box>
+                  <Flex direction="column" justify="space-between">
                     <Image
                       src={ArrowIcon}
                       w="50px"
                       h="30px"
                       onClick={closeFeed}
+                      _hover={{ cursor: "pointer" }}
                     />
-                  </Box>
+                    <Image
+                      src={PlusIcon}
+                      w="50px"
+                      h="30px"
+                      onClick={() => console.log("Abrir modal")}
+                      _hover={{ cursor: "pointer" }}
+                    />
+                  </Flex>
                 </Flex>
               </Flex>
               <Flex
-                bg="gray.300"
-                borderRadius="15px"
                 w="80%"
+                direction="column"
                 align="center"
                 justify="center"
                 m="0 auto"
                 mt="15px"
+                gap="15px"
               >
-                {pets.map((item, index) => (
+                {selected.map((item, index) => (
                   <Flex
                     key={index}
                     direction="row"
                     p="5"
                     w="100%"
-                    justify="space-evenly"
-                    onClick={onOpen}
+                    align="center"
+                    justify="flex-start"
+                    borderRadius="15px"
+                    bg="gray.300"
+                    _hover={{
+                      cursor: "pointer",
+                      bg: "blue.300",
+                      borderRadius: "15px",
+                    }}
                   >
                     <Image src={Bowl} w="35px" h="35px" mr="15px" />
                     <Box>
                       <Heading as="h3" size="24px">
-                        {item.feed?.frequency}
+                        Freq: {item.feed?.frequency}
                       </Heading>
-                      <Text>{item.feed?.time}</Text>
+                      <Text>Horário: {item.feed?.time}</Text>
                     </Box>
                   </Flex>
                 ))}
@@ -140,8 +161,16 @@ export const CardFeed = ({
               w="100%"
               h="70px"
             >
-              <Heading as="h2">{petName}</Heading>
-              <Image src={ArrowIcon} w="50px" h="30px" onClick={closeFeed} />
+              <Heading as="h2" size="32px">
+                {petName.toUpperCase()}
+              </Heading>
+              <Image
+                src={ArrowIcon}
+                w="50px"
+                h="30px"
+                onClick={closeFeed}
+                _hover={{ cursor: "pointer" }}
+              />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
               {pets.map((item, index) => (

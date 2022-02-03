@@ -21,6 +21,7 @@ import { usePetShop } from "../../contexts/ContextPetShop";
 import { useAuth } from "../../contexts/ContextAuth";
 
 interface PetShopModalProps {
+  petShopId: number;
   petId: number;
   isOpen: boolean;
   onOpen: () => void;
@@ -41,10 +42,13 @@ interface PetShop {
   date?: string;
   frequency?: string;
   userId: number;
+  idPet: number;
   status: boolean;
+  id: number;
 }
 
 export const ModalPetshop = ({
+  petShopId,
   petId,
   isOpen,
   onOpen,
@@ -75,9 +79,10 @@ export const ModalPetshop = ({
       date: JSON.stringify(date),
       price: price,
       frequency: frequency,
+      idPet: petId,
       status: true,
     };
-    editPetShop(newPetShop as PetShop, petId, accessToken);
+    editPetShop(newPetShop as PetShop, petShopId, accessToken);
     onClose();
   };
 
