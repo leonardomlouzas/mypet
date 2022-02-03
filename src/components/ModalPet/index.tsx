@@ -21,6 +21,7 @@ interface ModalPetProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  isNew: boolean;
 }
 
 interface FormEditData {
@@ -45,8 +46,14 @@ interface Pets {
   feed?: Feed;
   id: number;
 }
-export const ModalPet = ({ petId, isOpen, onOpen, onClose }: ModalPetProps) => {
-  const { registerPets, removePets } = usePets();
+export const ModalPet = ({
+  petId,
+  isOpen,
+  onOpen,
+  onClose,
+  isNew,
+}: ModalPetProps) => {
+  const { registerPets, editPets, removePets } = usePets();
   const { accessToken, user } = useAuth();
 
   const schemaEdit = yup.object().shape({
@@ -64,6 +71,19 @@ export const ModalPet = ({ petId, isOpen, onOpen, onClose }: ModalPetProps) => {
     resolver: yupResolver(schemaEdit),
   });
 
+  const handleNew = ({ nome, specie, age, img_url }: FormEditData) => {
+    const newPet = {
+      nome: nome,
+      specie: specie,
+      age: age,
+      img_url: img_url,
+      userId: user.id,
+      feed: {},
+    };
+    console.log(newPet);
+    registerPets(newPet as Pets, accessToken);
+  };
+
   const handleEdit = ({ nome, specie, age, img_url }: FormEditData) => {
     const newPet = {
       nome: nome,
@@ -73,9 +93,7 @@ export const ModalPet = ({ petId, isOpen, onOpen, onClose }: ModalPetProps) => {
       userId: user.id,
       feed: {},
     };
-    console.log(JSON.stringify(newPet));
-    console.log(accessToken);
-    registerPets(newPet as Pets, accessToken);
+    editPets(newPet as Pets, petId, accessToken);
   };
 
   const handleDelete = (id: number) => {
@@ -91,9 +109,12 @@ export const ModalPet = ({ petId, isOpen, onOpen, onClose }: ModalPetProps) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Editar</ModalHeader>
+          <ModalHeader>{isNew ? "Adicionar" : "Editar"}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody as="form" onSubmit={handleSubmit(handleEdit)}>
+          <ModalBody
+            as="form"
+            onSubmit={handleSubmit(isNew ? handleNew : handleEdit)}
+          >
             <VStack alignItems="flex-start">
               <Input
                 label="Nome"
@@ -110,7 +131,7 @@ export const ModalPet = ({ petId, isOpen, onOpen, onClose }: ModalPetProps) => {
               />
               <Input
                 type="number"
-                label="Data de nascimento"
+                label="Idade"
                 {...register("age")}
                 error={errors.age}
               />
@@ -126,7 +147,9 @@ export const ModalPet = ({ petId, isOpen, onOpen, onClose }: ModalPetProps) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleDelete(petId)}>Deletar</Button>
+            {!isNew && (
+              <Button onClick={() => handleDelete(petId)}>Deletar</Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -63,7 +63,7 @@ const PetsProvider = ({ children }: PetsProviderProps) => {
 
   const registerPets = useCallback(async (data: Pets, accessToken: string) => {
     await api
-      .post("/pets", {
+      .post("/pets", data, {
         headers: { authorization: `Bearer ${accessToken}` },
       })
       .catch((err) => console.log("registerPets function error", err));
