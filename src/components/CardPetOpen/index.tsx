@@ -97,12 +97,14 @@ export const CardPetOpen = ({
                       w="50px"
                       h="40px"
                       onClick={returnToDesktop}
+                      _hover={{ cursor: "pointer" }}
                     />
                     <Image
                       src={EngineIcon}
                       w="50px"
                       h="40px"
                       onClick={onOpen}
+                      _hover={{ cursor: "pointer" }}
                     />
                   </Flex>
                 </Flex>

@@ -6,6 +6,7 @@ import {
   Text,
   Center,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import PetShopIcon from "../../assets/store-alt-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
@@ -72,7 +73,7 @@ export const CardPetshop = ({
                 <Flex justify="space-between" w="100%">
                   <Box>
                     <Heading as="h3">{selected[0].nome}</Heading>
-                    <Text>{selected[0].specie}</Text>
+                    <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
                   <Box>
@@ -86,13 +87,13 @@ export const CardPetshop = ({
                 </Flex>
               </Flex>
               <Flex
-                bg="gray.300"
-                borderRadius="15px"
                 w="80%"
+                direction="column"
                 align="center"
                 justify="center"
                 m="0 auto"
                 mt="15px"
+                gap="15px"
               >
                 {petShop.map((item, index) => (
                   <Flex
@@ -100,16 +101,19 @@ export const CardPetshop = ({
                     direction="row"
                     p="5"
                     w="100%"
-                    justify="space-evenly"
+                    align="center"
+                    justify="flex-start"
                     onClick={onOpen}
+                    borderRadius="15px"
+                    bg="gray.300"
                   >
                     <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
                     <Box>
                       <Heading as="h3" size="24px">
                         {item.service}
                       </Heading>
-                      <Text>{item.date}</Text>
-                      <Text>{item.price}</Text>
+                      <Text>Data: {item.date}</Text>
+                      <Text>R$ {item.price}</Text>
                     </Box>
                   </Flex>
                 ))}

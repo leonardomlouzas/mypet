@@ -6,6 +6,7 @@ import {
   Text,
   Center,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import VaccineIcon from "../../assets/syringe-solid.svg";
@@ -81,7 +82,7 @@ export const CardVaccine = ({
                 <Flex justify="space-between" w="100%">
                   <Box>
                     <Heading as="h3">{selected[0].nome}</Heading>
-                    <Text>{selected[0].specie}</Text>
+                    <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
                   <Box>
@@ -90,18 +91,19 @@ export const CardVaccine = ({
                       w="50px"
                       h="30px"
                       onClick={closeVaccine}
+                      _hover={{ cursor: "pointer" }}
                     />
                   </Box>
                 </Flex>
               </Flex>
               <Flex
-                bg="gray.300"
-                borderRadius="15px"
                 w="80%"
+                direction="column"
                 align="center"
                 justify="center"
                 m="0 auto"
                 mt="15px"
+                gap="15px"
               >
                 {vaccines.map((item, index) => (
                   <Flex
@@ -109,7 +111,10 @@ export const CardVaccine = ({
                     direction="row"
                     p="5"
                     w="100%"
-                    justify="space-evenly"
+                    align="center"
+                    justify="flex-start"
+                    borderRadius="15px"
+                    bg="gray.300"
                     onClick={() => handler(item.id)}
                     _hover={{
                       borderRadius: "15px",
@@ -122,8 +127,8 @@ export const CardVaccine = ({
                       <Heading as="h3" size="24px">
                         {item.vaccine_name}
                       </Heading>
-                      <Text>{item.date}</Text>
-                      <Text>{item.expiration}</Text>
+                      <Text>Data:{item.date}</Text>
+                      <Text>Exp:{item.expiration}</Text>
                     </Box>
                   </Flex>
                 ))}

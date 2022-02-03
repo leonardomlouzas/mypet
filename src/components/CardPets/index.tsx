@@ -14,7 +14,6 @@ import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
 import { useAuth } from "../../contexts/ContextAuth";
 
-import VenusIcon from "../../assets/venus-solid.svg";
 import BgImage from "../../assets/background.png";
 interface CardPetProps {
   mobile: boolean;
@@ -48,6 +47,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
         <Flex
           justify="center"
           align="center"
+          direction={mobile ? "column" : "row"}
           mt={mobile ? "" : "25px"}
           w="100%"
           minH="400px"
@@ -59,7 +59,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               align="center"
               justify="space-evenly"
               borderRadius={mobile ? "0px" : "20px"}
-              border={mobile ? "0px" : "1px"}
+              borderBottom={mobile && pets.length > 1 ? "1px" : "0px"}
               w={mobile ? "100%" : "300px"}
               mb={mobile ? "10px" : "0px"}
               mr={mobile ? "0px" : "10px"}
@@ -92,23 +92,51 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
                   <Heading as="h3" size="md">
                     {item.nome}
                   </Heading>
-                  <Image src={VenusIcon} w="30px" h="30px" />
                 </Flex>
                 <Flex
                   direction="column"
                   align="start"
-                  justify="center"
-                  mb="15px"
+                  justify="start"
+                  m="0 auto"
                   w="100%"
                 >
                   <Badge bg="yellow.200" mb="5px">
                     {item.specie}
                   </Badge>
-                  <Text>{item.age} anos</Text>
+                  <Text>Idade: {item.age} anos</Text>
                 </Flex>
               </Box>
             </Flex>
           ))}
+          {mobile ? (
+            pets.length === 0 ? (
+              <>
+                <Flex w="100vw" h="100%" bg="gray.200" justify="center">
+                  <Text align="center" fontWeight="bold">
+                    Sem pets
+                    <br />
+                    Adicione algum
+                  </Text>
+                </Flex>
+              </>
+            ) : (
+              <></>
+            )
+          ) : (
+            <Flex
+              // w="300px"
+              borderRadius="20px"
+              direction="column"
+              align="center"
+              justify="center"
+              bg="gray.200"
+              p="8"
+              _hover={{ color: "yellow.200" }}
+            >
+              <Image src="" alt="Adicionar" w="80px" h="80px" />
+              <Text fontWeight="bold">Adicione seu amigo</Text>
+            </Flex>
+          )}
         </Flex>
       </Box>
       {mobile ? (

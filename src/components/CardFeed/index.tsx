@@ -5,6 +5,7 @@ import {
   Heading,
   Image,
   Text,
+  Badge,
   useDisclosure,
 } from "@chakra-ui/react";
 import Bowl from "../../assets/bowl-solid.svg";
@@ -75,7 +76,7 @@ export const CardFeed = ({
                 <Flex justify="space-between" w="100%">
                   <Box>
                     <Heading as="h3">{selected[0].nome}</Heading>
-                    <Text>{selected[0].specie}</Text>
+                    <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
                   <Box>
@@ -84,18 +85,19 @@ export const CardFeed = ({
                       w="50px"
                       h="30px"
                       onClick={closeFeed}
+                      _hover={{ cursor: "pointer" }}
                     />
                   </Box>
                 </Flex>
               </Flex>
               <Flex
-                bg="gray.300"
-                borderRadius="15px"
                 w="80%"
+                direction="column"
                 align="center"
                 justify="center"
                 m="0 auto"
                 mt="15px"
+                gap="15px"
               >
                 {pets.map((item, index) => (
                   <Flex
@@ -103,15 +105,22 @@ export const CardFeed = ({
                     direction="row"
                     p="5"
                     w="100%"
-                    justify="space-evenly"
-                    onClick={onOpen}
+                    align="center"
+                    justify="flex-start"
+                    borderRadius="15px"
+                    bg="gray.300"
+                    _hover={{
+                      cursor: "pointer",
+                      bg: "blue.300",
+                      borderRadius: "15px",
+                    }}
                   >
                     <Image src={Bowl} w="35px" h="35px" mr="15px" />
                     <Box>
                       <Heading as="h3" size="24px">
-                        {item.feed?.frequency}
+                        Freq: {item.feed?.frequency}
                       </Heading>
-                      <Text>{item.feed?.time}</Text>
+                      <Text>Horário: {item.feed?.time}</Text>
                     </Box>
                   </Flex>
                 ))}
@@ -141,7 +150,13 @@ export const CardFeed = ({
               h="70px"
             >
               <Heading as="h2">{petName}</Heading>
-              <Image src={ArrowIcon} w="50px" h="30px" onClick={closeFeed} />
+              <Image
+                src={ArrowIcon}
+                w="50px"
+                h="30px"
+                onClick={closeFeed}
+                _hover={{ cursor: "pointer" }}
+              />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
               {pets.map((item, index) => (
