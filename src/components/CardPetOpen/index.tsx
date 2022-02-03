@@ -79,6 +79,8 @@ export const CardPetOpen = ({
                   h="200px"
                   borderRadius="20px"
                   mr="25px"
+                  border="2px"
+                  borderColor="yellow.300"
                 />
                 <Flex w="100%" justify="space-between">
                   <Box>
@@ -103,8 +105,8 @@ export const CardPetOpen = ({
                   >
                     <Image
                       src={ArrowIcon}
-                      w="50px"
-                      h="40px"
+                      w="30px"
+                      h="30px"
                       onClick={returnToDesktop}
                       _hover={{ cursor: "pointer" }}
                     />
@@ -215,8 +217,8 @@ export const CardPetOpen = ({
             </Heading>
             <Image
               src={ArrowIcon}
-              w="70px"
-              h="50px"
+              w="30px"
+              h="30px"
               onClick={returnToDesktop}
             />
           </Flex>

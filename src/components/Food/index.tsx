@@ -80,7 +80,11 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
-                  <Flex direction="column" jusify="space-between">
+                  <Flex
+                    direction="column"
+                    align="center"
+                    justify="space-between"
+                  >
                     <Image
                       src={ArrowIcon}
                       w="50px"
@@ -159,11 +163,12 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
               bg="blue.300"
               w="100%"
               h="70px"
+              p="5"
             >
               <Heading as="h2" size="32px">
                 {petName.toUpperCase()}
               </Heading>
-              <Image src={ArrowIcon} w="50px" h="30px" onClick={closeFood} />
+              <Image src={ArrowIcon} w="30px" h="30px" onClick={closeFood} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
               {food
@@ -172,6 +177,8 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                   <Flex
                     key={index}
                     direction="row"
+                    align="center"
+                    justify="flex-start"
                     p="5"
                     borderBottom="1px"
                     w="100%"
@@ -179,7 +186,9 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                   >
                     <Image src={Utensils} w="35px" h="35px" mr="15px" />
                     <Box>
-                      <Heading as="h3">{item.item}</Heading>
+                      <Heading as="h3" size="16px">
+                        {item.item}
+                      </Heading>
                       <Text>{item.quantity}</Text>
                       <Text>{item.price}</Text>
                       <Text>{item.frequency}</Text>
@@ -188,7 +197,9 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                 ))}
             </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
-              <Heading as="h4">Adicionar Serviço</Heading>
+              <Heading as="h4" size="md">
+                Adicionar Comida
+              </Heading>
             </Center>
           </Box>
         </>

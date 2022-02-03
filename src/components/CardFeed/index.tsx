@@ -45,19 +45,19 @@ export const CardFeed = ({
 
   return (
     <>
+      <ModalFeed
+        petId={petId}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        oldAge={age}
+        oldImg={img}
+        oldNome={petName}
+        oldRace={race}
+        oldSpecie={specie}
+      />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
-          <ModalFeed
-            petId={petId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            oldAge={age}
-            oldImg={img}
-            oldNome={petName}
-            oldRace={race}
-            oldSpecie={specie}
-          />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -142,17 +142,6 @@ export const CardFeed = ({
         </Box>
       ) : (
         <>
-          <ModalFeed
-            petId={petId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            oldAge={age}
-            oldImg={img}
-            oldNome={petName}
-            oldRace={race}
-            oldSpecie={specie}
-          />
           <Box w="100vw" h="100vh">
             <Flex
               align="center"
@@ -160,13 +149,14 @@ export const CardFeed = ({
               bg="blue.300"
               w="100%"
               h="70px"
+              p="5"
             >
               <Heading as="h2" size="32px">
                 {petName.toUpperCase()}
               </Heading>
               <Image
                 src={ArrowIcon}
-                w="50px"
+                w="30px"
                 h="30px"
                 onClick={closeFeed}
                 _hover={{ cursor: "pointer" }}
@@ -177,6 +167,8 @@ export const CardFeed = ({
                 <Flex
                   key={index}
                   direction="row"
+                  align="center"
+                  justify="flex-start"
                   p="5"
                   borderBottom="1px"
                   w="100%"
@@ -184,14 +176,18 @@ export const CardFeed = ({
                 >
                   <Image src={Bowl} w="35px" h="35px" mr="15px" />
                   <Box>
-                    <Heading as="h3">{item.feed?.frequency}</Heading>
+                    <Heading as="h3" size="16px">
+                      {item.feed?.frequency}
+                    </Heading>
                     <Text>{item.feed?.time}</Text>
                   </Box>
                 </Flex>
               ))}
             </Box>
             <Center w="100%" h="70px" bg="yellow.300" p="5">
-              <Heading as="h4">Adicionar Alimento</Heading>
+              <Heading as="h4" size="md">
+                Adicionar Alimento
+              </Heading>
             </Center>
           </Box>
         </>

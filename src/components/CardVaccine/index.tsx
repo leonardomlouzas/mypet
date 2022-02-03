@@ -55,14 +55,14 @@ export const CardVaccine = ({
 
   return (
     <>
+      <ModalVaccine
+        vaccineId={vaccineId}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+      />
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
-          <ModalVaccine
-            vaccineId={vaccineId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-          />
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -89,7 +89,11 @@ export const CardVaccine = ({
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
-                  <Flex direction="column" justify="space-between">
+                  <Flex
+                    direction="column"
+                    align="center"
+                    justify="space-between"
+                  >
                     <Image
                       src={ArrowIcon}
                       w="50px"
@@ -149,12 +153,6 @@ export const CardVaccine = ({
         </Box>
       ) : (
         <>
-          <ModalVaccine
-            vaccineId={vaccineId}
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-          />
           <Box w="100vw" h="100vh">
             <Flex
               align="center"
@@ -162,11 +160,12 @@ export const CardVaccine = ({
               bg="blue.300"
               w="100%"
               h="70px"
+              p="5"
             >
               <Heading as="h2" size="32px">
                 {petName.toUpperCase()}
               </Heading>
-              <Image src={ArrowIcon} w="50px" h="30px" onClick={closeVaccine} />
+              <Image src={ArrowIcon} w="30px" h="30px" onClick={closeVaccine} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
               {selectedVaccine.map((item, index) => (

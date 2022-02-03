@@ -67,7 +67,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               p="5"
               bg="gray.200"
               gap="15px"
-              boxShadow="dark-lg"
+              boxShadow={mobile ? "" : "dark-lg"}
               onClick={() =>
                 open(
                   item.id,
