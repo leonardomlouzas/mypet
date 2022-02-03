@@ -21,7 +21,7 @@ const BaseInput: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   { label, error = null, Icon, ...rest },
   ref
 ) => {
-  const [inputBorder, setInputBorder] = useState("gray.200");
+  const [inputBorder, setInputBorder] = useState("gray.400");
   const [colorIcon, setColorIcon] = useState("gray.900");
   const [checkInput, setCheckInput] = useState<boolean>(false);
 
