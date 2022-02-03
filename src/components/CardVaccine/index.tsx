@@ -41,6 +41,7 @@ export const CardVaccine = ({
   const [vaccineId, setVaccineId] = useState(0);
 
   const selected = pets.filter((item) => item.id === petId);
+  const selectedVaccine = vaccines.filter((item) => item.idPet === petId);
 
   useEffect(() => {
     getVaccines(accessToken);
@@ -69,6 +70,7 @@ export const CardVaccine = ({
               bg="white"
               borderRadius="20px"
               w="600px"
+              mt="25px"
             >
               <Flex borderBottom="1px" pb="15px">
                 <Image
@@ -81,7 +83,7 @@ export const CardVaccine = ({
                 />
                 <Flex justify="space-between" w="100%">
                   <Box>
-                    <Heading as="h3">{selected[0].nome}</Heading>
+                    <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
@@ -105,7 +107,7 @@ export const CardVaccine = ({
                 mt="15px"
                 gap="15px"
               >
-                {vaccines.map((item, index) => (
+                {selectedVaccine.map((item, index) => (
                   <Flex
                     key={index}
                     direction="row"
@@ -152,11 +154,13 @@ export const CardVaccine = ({
               w="100%"
               h="70px"
             >
-              <Heading as="h2">{petName}</Heading>
+              <Heading as="h2" size="32px">
+                {petName.toUpperCase()}
+              </Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closeVaccine} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
-              {vaccines.map((item, index) => (
+              {selectedVaccine.map((item, index) => (
                 <Flex
                   key={index}
                   direction="row"

@@ -61,6 +61,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
               bg="white"
               borderRadius="20px"
               w="600px"
+              mt="25px"
             >
               <Flex borderBottom="1px" pb="15px">
                 <Image
@@ -73,7 +74,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                 />
                 <Flex justify="space-between" w="100%">
                   <Box>
-                    <Heading as="h3">{selected[0].nome}</Heading>
+                    <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
@@ -83,6 +84,7 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                       w="50px"
                       h="30px"
                       onClick={closeFood}
+                      _hover={{ cursor: "pointer" }}
                     />
                   </Box>
                 </Flex>
@@ -109,6 +111,11 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
                       borderRadius="15px"
                       bg="gray.300"
                       onClick={() => handler(item.id)}
+                      _hover={{
+                        borderRadius: "15px",
+                        bg: "blue.300",
+                        cursor: "pointer",
+                      }}
                     >
                       <Image src={Utensils} w="35px" h="35px" mr="15px" />
                       <Flex
@@ -144,7 +151,9 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
               w="100%"
               h="70px"
             >
-              <Heading as="h2">{petName}</Heading>
+              <Heading as="h2" size="32px">
+                {petName.toUpperCase()}
+              </Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closeFood} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">

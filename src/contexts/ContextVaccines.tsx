@@ -17,7 +17,7 @@ interface Vaccines {
   date?: string;
   expiration?: string;
   price?: number;
-  petId?: number;
+  idPet?: number;
   status: boolean;
   id: number;
 }

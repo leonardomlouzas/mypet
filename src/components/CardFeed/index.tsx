@@ -63,6 +63,7 @@ export const CardFeed = ({
               bg="white"
               borderRadius="20px"
               w="600px"
+              mt="25px"
             >
               <Flex borderBottom="1px" pb="15px">
                 <Image
@@ -75,7 +76,7 @@ export const CardFeed = ({
                 />
                 <Flex justify="space-between" w="100%">
                   <Box>
-                    <Heading as="h3">{selected[0].nome}</Heading>
+                    <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
@@ -149,7 +150,9 @@ export const CardFeed = ({
               w="100%"
               h="70px"
             >
-              <Heading as="h2">{petName}</Heading>
+              <Heading as="h2" size="32px">
+                {petName.toUpperCase()}
+              </Heading>
               <Image
                 src={ArrowIcon}
                 w="50px"

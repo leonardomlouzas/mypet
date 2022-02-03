@@ -15,7 +15,7 @@ import { Header } from "../Header";
 import { usePetShop } from "../../contexts/ContextPetShop";
 import { useAuth } from "../../contexts/ContextAuth";
 import { usePets } from "../../contexts/ContextPets";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { ModalPetshop } from "../ModalPetShop";
 
@@ -36,17 +36,25 @@ export const CardPetshop = ({
   const { accessToken } = useAuth();
   const { pets } = usePets();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [petShopId, setPetShoId] = useState(0);
 
   const selected = pets.filter((item) => item.id === petId);
+  const selectedPetShop = petShop.filter((item) => item.idPet === petId);
 
   useEffect(() => {
     getPetShop(accessToken);
   });
+
+  const handle = (id: number) => {
+    setPetShoId(id);
+    onOpen();
+  };
   return (
     <>
       {mobile ? (
         <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
           <ModalPetshop
+            petShopId={petShopId}
             petId={petId}
             isOpen={isOpen}
             onOpen={onOpen}
@@ -60,6 +68,7 @@ export const CardPetshop = ({
               bg="white"
               borderRadius="20px"
               w="600px"
+              mt="25px"
             >
               <Flex borderBottom="1px" pb="15px">
                 <Image
@@ -72,7 +81,7 @@ export const CardPetshop = ({
                 />
                 <Flex justify="space-between" w="100%">
                   <Box>
-                    <Heading as="h3">{selected[0].nome}</Heading>
+                    <Heading as="h3">{selected[0].nome.toUpperCase()}</Heading>
                     <Badge bg="yellow.300">{selected[0].specie}</Badge>
                     <Text>{selected[0].age}</Text>
                   </Box>
@@ -82,6 +91,7 @@ export const CardPetshop = ({
                       w="50px"
                       h="30px"
                       onClick={closePetShop}
+                      _hover={{ cursor: "pointer" }}
                     />
                   </Box>
                 </Flex>
@@ -95,7 +105,7 @@ export const CardPetshop = ({
                 mt="15px"
                 gap="15px"
               >
-                {petShop.map((item, index) => (
+                {selectedPetShop.map((item, index) => (
                   <Flex
                     key={index}
                     direction="row"
@@ -103,9 +113,14 @@ export const CardPetshop = ({
                     w="100%"
                     align="center"
                     justify="flex-start"
-                    onClick={onOpen}
+                    onClick={() => handle(item.id)}
                     borderRadius="15px"
                     bg="gray.300"
+                    _hover={{
+                      borderRadius: "15px",
+                      bg: "blue.300",
+                      cursor: "pointer",
+                    }}
                   >
                     <Image src={PetShopIcon} w="35px" h="35px" mr="15px" />
                     <Box>
@@ -124,6 +139,7 @@ export const CardPetshop = ({
       ) : (
         <>
           <ModalPetshop
+            petShopId={petShopId}
             petId={petId}
             isOpen={isOpen}
             onOpen={onOpen}
@@ -137,11 +153,13 @@ export const CardPetshop = ({
               w="100%"
               h="70px"
             >
-              <Heading as="h2">{petName}</Heading>
+              <Heading as="h2" size="32px">
+                {petName.toUpperCase()}
+              </Heading>
               <Image src={ArrowIcon} w="50px" h="30px" onClick={closePetShop} />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
-              {petShop.map((item, index) => (
+              {selectedPetShop.map((item, index) => (
                 <Flex
                   key={index}
                   direction="row"

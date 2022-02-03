@@ -13,6 +13,7 @@ import { Header } from "../Header";
 
 import { usePets } from "../../contexts/ContextPets";
 import { useAuth } from "../../contexts/ContextAuth";
+import PlusIcon from "../../assets/plus-solid.svg";
 
 import BgImage from "../../assets/background.png";
 interface CardPetProps {
@@ -57,7 +58,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               key={index}
               direction={mobile ? "row" : "column"}
               align="center"
-              justify="space-evenly"
+              justify="flex-start"
               borderRadius={mobile ? "0px" : "20px"}
               borderBottom={mobile && pets.length > 1 ? "1px" : "0px"}
               w={mobile ? "100%" : "300px"}
@@ -65,6 +66,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               mr={mobile ? "0px" : "10px"}
               p="5"
               bg="gray.200"
+              gap="15px"
               onClick={() =>
                 open(
                   item.id,
@@ -124,23 +126,27 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
             )
           ) : (
             <Flex
-              // w="300px"
-              borderRadius="20px"
               direction="column"
               align="center"
               justify="center"
-              bg="gray.200"
               p="8"
               _hover={{ color: "yellow.200" }}
             >
-              <Image src="" alt="Adicionar" w="80px" h="80px" />
+              <Image src={PlusIcon} alt="Adicionar" w="50px" h="50px" />
               <Text fontWeight="bold">Adicione seu amigo</Text>
             </Flex>
           )}
         </Flex>
       </Box>
       {mobile ? (
-        <Center w="100%" h="70px" bg="yellow.300" p="5">
+        <Center
+          w="100%"
+          h="70px"
+          bg="yellow.300"
+          p="5"
+          _hover={{ bg: "yellow.200", cursor: "pointer" }}
+          fontWeight="bold"
+        >
           Adicionar Pet
         </Center>
       ) : (
