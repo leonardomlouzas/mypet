@@ -14,7 +14,6 @@ import BgImage from "../../assets/background.png";
 import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
 import { ModalFeed } from "../ModalFeed";
-import { useState } from "react";
 
 interface FeedProps {
   petId: number;
@@ -147,7 +146,7 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
               />
             </Flex>
             <Box bg="gray.200" w="100%" minH="400px">
-              {pets.map((item, index) => (
+              {selected.map((item, index) => (
                 <Flex
                   key={index}
                   direction="row"

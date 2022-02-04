@@ -22,6 +22,7 @@ interface ModalPetProps {
   onOpen: () => void;
   onClose: () => void;
   isNew: boolean;
+  back?: () => void;
 }
 
 interface FormEditData {
@@ -52,8 +53,9 @@ export const ModalPet = ({
   onOpen,
   onClose,
   isNew,
+  back,
 }: ModalPetProps) => {
-  const { registerPets, editPets } = usePets();
+  const { registerPets, editPets, removePets } = usePets();
   const { accessToken, user } = useAuth();
 
   const schemaEdit = yup.object().shape({
@@ -96,6 +98,13 @@ export const ModalPet = ({
     editPets(newPet as Pets, petId, accessToken);
     onClose();
   };
+
+  const handleDelete = () => {
+    if (!!back) {
+      back();
+    }
+    removePets(petId, accessToken);
+  };
   return (
     <>
       <Modal
@@ -115,7 +124,7 @@ export const ModalPet = ({
             <VStack alignItems="flex-start">
               <Input
                 label="Nome"
-                placeholder="Ex: PLuto"
+                placeholder="Ex: Pluto"
                 {...register("nome")}
                 error={errors.nome}
               />
@@ -135,6 +144,7 @@ export const ModalPet = ({
 
               <Input
                 label="Imagem"
+                placeholder="Ex: https://image.com"
                 {...register("img_url")}
                 error={errors.img_url}
               />
@@ -143,7 +153,9 @@ export const ModalPet = ({
             <Button type="submit">Confirmar</Button>
           </ModalBody>
 
-          <ModalFooter></ModalFooter>
+          <ModalFooter>
+            {!isNew && <Button onClick={handleDelete}>Deletar</Button>}
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

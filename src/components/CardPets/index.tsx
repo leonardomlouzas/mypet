@@ -175,6 +175,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
           p="5"
           _hover={{ bg: "yellow.200", cursor: "pointer" }}
           fontWeight="bold"
+          onClick={onOpen}
         >
           Adicionar Pet
         </Center>

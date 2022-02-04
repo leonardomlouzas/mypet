@@ -18,14 +18,7 @@ export const Dashboard = () => {
   const [foodOpen, setFoodOpen] = useState(false);
   const [isLargerThan480] = useMediaQuery("(min-width: 635px)");
 
-  const handler = (
-    id: number,
-    name: string,
-    img: string,
-    age: number,
-    race: string,
-    specie: string
-  ) => {
+  const handler = (id: number, name: string) => {
     setOpenPet(true);
     setPetId(id);
     setPetName(name);

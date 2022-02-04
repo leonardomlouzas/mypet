@@ -76,8 +76,8 @@ export const ModalVaccine = ({
   }: FormEditData) => {
     const newVaccine = {
       vaccine_name: vaccine_name,
-      date: JSON.stringify(date),
-      expiration: JSON.stringify(expiration),
+      date: date.toISOString().slice(0, 10).replace(/-/g, "/"),
+      expiration: expiration.toISOString().slice(0, 10).replace(/-/g, "/"),
       price: price,
       status: false,
       idPet: petId,
@@ -97,8 +97,8 @@ export const ModalVaccine = ({
   }: FormEditData) => {
     const newVaccine = {
       vaccine_name: vaccine_name,
-      date: JSON.stringify(date),
-      expiration: JSON.stringify(expiration),
+      date: date.toISOString().slice(0, 10).replace(/-/g, "/"),
+      expiration: expiration.toISOString().slice(0, 10).replace(/-/g, "/"),
       price: price,
       status: false,
       id: vaccineId,

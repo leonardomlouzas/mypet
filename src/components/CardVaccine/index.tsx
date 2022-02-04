@@ -153,6 +153,7 @@ export const CardVaccine = ({
                       </Heading>
                       <Text>Data:{item.date}</Text>
                       <Text>Exp:{item.expiration}</Text>
+                      <Text>R$: {item.price}</Text>
                     </Box>
                   </Flex>
                 ))}
@@ -194,6 +195,7 @@ export const CardVaccine = ({
                     </Heading>
                     <Text>{item.date}</Text>
                     <Text>{item.expiration}</Text>
+                    <Text>R$: {item.price}</Text>
                   </Box>
                 </Flex>
               ))}

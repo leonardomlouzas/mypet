@@ -78,7 +78,7 @@ export const ModalPetshop = ({
   const handleNew = ({ service, date, price, frequency }: FormEditData) => {
     const newPetShop = {
       service: service,
-      date: JSON.stringify(date),
+      date: date.toISOString().slice(0, 10).replace(/-/g, "/"),
       price: price,
       frequency: frequency,
       idPet: petId,
@@ -92,7 +92,7 @@ export const ModalPetshop = ({
   const handleEdit = ({ service, date, price, frequency }: FormEditData) => {
     const newPetShop = {
       service: service,
-      date: JSON.stringify(date),
+      date: date.toISOString().slice(0, 10).replace(/-/g, "/"),
       price: price,
       frequency: frequency,
       idPet: petId,
