@@ -12,6 +12,7 @@ import {
   Radio,
   VStack,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -161,14 +162,27 @@ export const ModalPetshop = ({
               />
             </VStack>
 
-            <Button type="submit">Confirmar</Button>
+            <Flex mt="15px" justifyContent="space-between">
+              <Button
+                type="submit"
+                bgColor="green.300"
+                _hover={{ bgColor: "green.500" }}
+              >
+                Confirmar
+              </Button>
+              {!isNew && (
+                <Button
+                  onClick={() => handleDelete(petShopId)}
+                  bgColor="red.300"
+                  _hover={{ bgColor: "red.500" }}
+                >
+                  Deletar
+                </Button>
+              )}
+            </Flex>
           </ModalBody>
 
-          <ModalFooter>
-            {!isNew && (
-              <Button onClick={() => handleDelete(petShopId)}>Deletar</Button>
-            )}
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>

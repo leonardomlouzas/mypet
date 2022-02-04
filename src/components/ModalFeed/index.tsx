@@ -11,6 +11,7 @@ import {
   Radio,
   VStack,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -138,7 +139,15 @@ export const ModalFeed = ({
               />
             </VStack>
 
-            <Button type="submit">Confirmar</Button>
+            <Flex mt="15px" justifyContent="space-between">
+              <Button
+                type="submit"
+                bgColor="green.300"
+                _hover={{ bgColor: "green.500" }}
+              >
+                Confirmar
+              </Button>
+            </Flex>
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -200,18 +200,21 @@ export const CardVaccine = ({
                 </Flex>
               ))}
             </Box>
-            <Center
-              w="100%"
-              h="70px"
-              bg="yellow.300"
-              p="5"
-              onClick={() => handler(0, true)}
-              _hover={{ bg: "yellow.200" }}
-            >
-              <Heading as="h4" size="md">
-                Adicionar Vacina
-              </Heading>
-            </Center>
+            <Flex align="center" justifyContent="center">
+              <Center
+                w="50%"
+                h="70px"
+                bg="yellow.300"
+                p="5"
+                borderRadius="15px"
+                onClick={() => handler(0, true)}
+                _hover={{ bg: "yellow.200", cursor: "pointer" }}
+              >
+                <Heading as="h4" size="md" textAlign="center">
+                  Adicionar Vacina
+                </Heading>
+              </Center>
+            </Flex>
           </Box>
         </>
       )}

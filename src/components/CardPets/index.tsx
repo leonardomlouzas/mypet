@@ -62,10 +62,9 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
           align="center"
           direction={mobile ? "column" : "row"}
           mt={mobile ? "" : "25px"}
-          w="100%"
-          minH="400px"
           flexWrap="wrap"
           gap="15px"
+          minH="400px"
         >
           {selected.map((item, index) => (
             <Flex
@@ -168,17 +167,20 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
         </Flex>
       </Box>
       {mobile ? (
-        <Center
-          w="100%"
-          h="70px"
-          bg="yellow.300"
-          p="5"
-          _hover={{ bg: "yellow.200", cursor: "pointer" }}
-          fontWeight="bold"
-          onClick={onOpen}
-        >
-          Adicionar Pet
-        </Center>
+        <Flex align="center" justifyContent="center">
+          <Center
+            w="50%"
+            h="70px"
+            bg="yellow.300"
+            p="5"
+            borderRadius="15px"
+            _hover={{ bg: "yellow.200", cursor: "pointer" }}
+            fontWeight="bold"
+            onClick={onOpen}
+          >
+            Adicionar Pet
+          </Center>
+        </Flex>
       ) : (
         ""
       )}

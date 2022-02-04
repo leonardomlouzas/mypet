@@ -307,15 +307,20 @@ export const CardPetOpen = ({
             </Flex>
           </Flex>
 
-          <Center
-            w="100%"
-            h="50px"
-            bg="yellow.300"
-            onClick={onOpen}
-            _hover={{ bg: "yellow.200", cursor: "pointer" }}
-          >
-            <Text>Editar Pet</Text>
-          </Center>
+          <Flex align="center" justifyContent="center">
+            <Center
+              w="50%"
+              h="70px"
+              bg="yellow.300"
+              p="5"
+              borderRadius="15px"
+              _hover={{ bg: "yellow.200", cursor: "pointer" }}
+              fontWeight="bold"
+              onClick={onOpen}
+            >
+              Editar Pet
+            </Center>
+          </Flex>
         </Box>
       )}
     </>
