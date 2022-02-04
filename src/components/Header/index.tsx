@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Image } from "@chakra-ui/react";
+import { Flex, Heading, Image } from "@chakra-ui/react";
 import Logo from "../../assets/paw_heart.svg";
 import SignOutIcon from "../../assets/sign-out-alt-solid.svg";
 import { useAuth } from "../../contexts/ContextAuth";
@@ -21,7 +21,13 @@ export const Header = ({}) => {
             MyPets
           </Heading>
         </Flex>
-        <Image src={SignOutIcon} w="40px" h="40px" onClick={signOut} cursor="pointer" />
+        <Image
+          src={SignOutIcon}
+          w="40px"
+          h="40px"
+          onClick={signOut}
+          cursor="pointer"
+        />
       </Flex>
     </Flex>
   );

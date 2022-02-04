@@ -38,8 +38,8 @@ export const CardFood = ({ petName, petId, mobile, closeFood }: FeedProps) => {
   const selectedFood = food.filter((item) => item.userId === user.id);
 
   useEffect(() => {
-    getFood(accessToken);
-  }, []);
+    getFood(user.id, petId, accessToken);
+  }, [isOpen]);
 
   const handler = (id: number, state: boolean) => {
     if (state) {

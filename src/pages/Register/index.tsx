@@ -35,7 +35,7 @@ export const Register = () => {
       .string()
       .required("* Campo obrigatório")
       .email("* E-mail Inválido"),
-    password: yup.string().required("* Campo obrigatório"),
+    password: yup.string().required("* Campo obrigatório").min(6),
     confirm_password: yup
       .string()
       .oneOf([yup.ref("password")], "Senhas diferentes"),
@@ -144,21 +144,27 @@ export const Register = () => {
         </VStack>
         <Button
           type="submit"
-          bg="blue.500"
+          bg="blue.300"
           padding="25px"
           color="white"
           mt="35px"
           fontSize="xl"
           w="60%"
           _hover={{
-            bg: "blue.300",
+            bg: "blue.500",
           }}
         >
           Cadastrar
         </Button>
         <Text mt="15px" fontSize="lg">
           Já possui conta?{" "}
-          <Link as={DomLink} to="/" fontSize="md" _hover={{}} color="gray.400">
+          <Link
+            as={DomLink}
+            to="/"
+            fontSize="md"
+            _hover={{ color: "yellow.500" }}
+            color="gray.400"
+          >
             Clique aqui
           </Link>{" "}
         </Text>

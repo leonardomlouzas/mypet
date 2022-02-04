@@ -33,7 +33,7 @@ export const CardVaccine = ({
   mobile,
   closeVaccine,
 }: VaccineCardProps) => {
-  const { accessToken } = useAuth();
+  const { user, accessToken } = useAuth();
   const { pets } = usePets();
   const { vaccines, getVaccines } = useVaccine();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,8 +46,8 @@ export const CardVaccine = ({
   const selectedVaccine = vaccines.filter((item) => item.idPet === petId);
 
   useEffect(() => {
-    getVaccines(accessToken);
-  });
+    getVaccines(user.id, petId, accessToken);
+  }, [isOpen, onClose]);
 
   const handler = (vaccineId: number, state: boolean) => {
     if (state) {

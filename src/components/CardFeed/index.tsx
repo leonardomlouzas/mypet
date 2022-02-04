@@ -1,6 +1,5 @@
 import {
   Box,
-  Center,
   Flex,
   Heading,
   Image,
@@ -11,13 +10,11 @@ import {
 import Bowl from "../../assets/bowl-solid.svg";
 import ArrowIcon from "../../assets/arrow-left-solid.svg";
 import BgImage from "../../assets/background.png";
-import PlusIcon from "../../assets/plus-solid.svg";
 
 import { Header } from "../Header";
 import { usePets } from "../../contexts/ContextPets";
 import { ModalFeed } from "../ModalFeed";
-import { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/ContextAuth";
+import { useState } from "react";
 
 interface FeedProps {
   petId: number;
@@ -27,8 +24,6 @@ interface FeedProps {
 export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
   const { pets } = usePets();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [isNew, setIsNew] = useState(false);
 
   const selected = pets.filter((item) => item.id === petId);
 
@@ -46,7 +41,13 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
         oldSpecie={selected[0].specie}
       />
       {mobile ? (
-        <Box w="100vw" h="100vh" bg="blue.300" bgImg={BgImage}>
+        <Box
+          w="100vw"
+          h="100vh"
+          bg="blue.300"
+          bgImg={BgImage}
+          background-color="rgba(0, 0, 0, 0.5)"
+        >
           <Header />
           <Flex justify="center" w="100%" mt="25px">
             <Flex
@@ -81,13 +82,6 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
                       onClick={closeFeed}
                       _hover={{ cursor: "pointer" }}
                     />
-                    {/* <Image
-                      src={PlusIcon}
-                      w="50px"
-                      h="30px"
-                      onClick={() => handle(true)}
-                      _hover={{ cursor: "pointer" }}
-                    /> */}
                   </Flex>
                 </Flex>
               </Flex>
@@ -174,15 +168,6 @@ export const CardFeed = ({ petId, mobile, closeFeed }: FeedProps) => {
                 </Flex>
               ))}
             </Box>
-            {/* <Center
-              w="100%"
-              h="70px"
-              bg="yellow.300"
-              p="5"
-              onClick={() => handle(true)}
-            >
-              <Heading as="h4">Adicionar Alimento</Heading>
-            </Center> */}
           </Box>
         </>
       )}

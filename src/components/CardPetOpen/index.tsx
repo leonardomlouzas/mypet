@@ -51,7 +51,7 @@ export const CardPetOpen = ({
 
   useEffect(() => {
     getPets(accessToken, user.id);
-  }, []);
+  }, [isOpen]);
 
   return (
     //mobileCode

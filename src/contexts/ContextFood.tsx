@@ -25,7 +25,11 @@ interface Food {
 
 interface FoodProviderData {
   food: Food[];
-  getFood: (accessToken: string) => Promise<void>;
+  getFood: (
+    userId: number,
+    idPet: number,
+    accessToken: string
+  ) => Promise<void>;
   registerFood: (data: Food, accessToken: string) => Promise<void>;
   editFood: (data: Food, id: number, accessToken: string) => Promise<void>;
   removeFood: (id: number, accessToken: string) => Promise<void>;
@@ -46,14 +50,17 @@ const useFood = () => {
 const FoodProvider = ({ children }: FoodProviderProps) => {
   const [food, setFood] = useState<Food[]>([]);
 
-  const getFood = useCallback(async (accessToken: string) => {
-    await api
-      .get("/foods", {
-        headers: { authorization: `Bearer ${accessToken}` },
-      })
-      .then((response) => setFood(response.data))
-      .catch((err) => console.log("getFood function error", err));
-  }, []);
+  const getFood = useCallback(
+    async (userId: number, idPet: number, accessToken: string) => {
+      await api
+        .get(`/users/${userId}/foods?idPet=${idPet}`, {
+          headers: { authorization: `Bearer ${accessToken}` },
+        })
+        .then((response) => setFood(response.data))
+        .catch((err) => console.log("getFood function error", err));
+    },
+    []
+  );
 
   const registerFood = useCallback(async (data: Food, accessToken: string) => {
     await api

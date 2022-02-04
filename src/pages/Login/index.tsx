@@ -13,6 +13,7 @@ import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import bg from "../../assets/background1.png";
 
 import Logo from "../../assets/Logo.svg";
 import { Input } from "../../components/Form/Input";
@@ -123,14 +124,14 @@ export const Login = () => {
         </VStack>
         <Button
           type="submit"
-          bg="yellow.500"
+          bg="yellow.300"
           padding="25px"
           color="white"
           mt="35px"
           fontSize="xl"
           w="60%"
           _hover={{
-            bg: "yellow.300",
+            bg: "yellow.500",
           }}
         >
           Logar
@@ -141,7 +142,9 @@ export const Login = () => {
             as={DomLink}
             to="/register"
             fontSize="md"
-            _hover={{}}
+            _hover={{
+              color: "blue.500",
+            }}
             color="gray.400"
           >
             Clique aqui

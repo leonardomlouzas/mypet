@@ -16,7 +16,7 @@ export const Dashboard = () => {
   const [petShopOpen, setPetShopOpen] = useState(false);
   const [feedOpen, setFeedOpen] = useState(false);
   const [foodOpen, setFoodOpen] = useState(false);
-  const [isLargerThan480] = useMediaQuery("(min-width: 480px)");
+  const [isLargerThan480] = useMediaQuery("(min-width: 635px)");
 
   const handler = (
     id: number,

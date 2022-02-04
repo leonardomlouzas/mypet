@@ -18,6 +18,7 @@ import * as yup from "yup";
 import { Input } from "../Form/Input";
 import { useAuth } from "../../contexts/ContextAuth";
 import { usePets } from "../../contexts/ContextPets";
+import { useEffect } from "react";
 
 interface ModalFeedProps {
   oldImg: string;
@@ -64,13 +65,16 @@ export const ModalFeed = ({
   onClose,
 }: ModalFeedProps) => {
   const { user, accessToken } = useAuth();
-  const { editPets } = usePets();
+  const { getPets, editPets } = usePets();
 
   const schemaEdit = yup.object().shape({
     frequency: yup.string().required(),
     time: yup.string().required(),
   });
 
+  useEffect(() => {
+    getPets(accessToken, user.id);
+  });
   const {
     handleSubmit,
     register,

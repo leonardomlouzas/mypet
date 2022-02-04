@@ -25,7 +25,11 @@ interface Vaccines {
 
 interface VaccinesProvidersData {
   vaccines: Vaccines[];
-  getVaccines: (accessToken: string) => Promise<void>;
+  getVaccines: (
+    userId: number,
+    idPet: number,
+    accessToken: string
+  ) => Promise<void>;
   registerVaccine: (data: Vaccines, accessToken: string) => Promise<void>;
   editVaccine: (
     data: Vaccines,
@@ -52,14 +56,17 @@ const useVaccine = () => {
 const VaccineProvider = ({ children }: VaccineProviderProps) => {
   const [vaccines, setVaccines] = useState<Vaccines[]>([]);
 
-  const getVaccines = useCallback(async (accessToken: string) => {
-    await api
-      .get("/vaccines", {
-        headers: { authorization: `Bearer ${accessToken}` },
-      })
-      .then((response) => setVaccines(response.data))
-      .catch((err) => console.log("getVaccines function error", err));
-  }, []);
+  const getVaccines = useCallback(
+    async (userId: number, idPet: number, accessToken: string) => {
+      await api
+        .get(`/users/${userId}/vaccines?idPet=${idPet}`, {
+          headers: { authorization: `Bearer ${accessToken}` },
+        })
+        .then((response) => setVaccines(response.data))
+        .catch((err) => console.log("getVaccines function error", err));
+    },
+    []
+  );
 
   const registerVaccine = useCallback(
     async (data: Vaccines, accessToken: string) => {

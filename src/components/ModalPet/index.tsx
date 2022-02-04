@@ -53,7 +53,7 @@ export const ModalPet = ({
   onClose,
   isNew,
 }: ModalPetProps) => {
-  const { registerPets, editPets, removePets } = usePets();
+  const { registerPets, editPets } = usePets();
   const { accessToken, user } = useAuth();
 
   const schemaEdit = yup.object().shape({
@@ -80,8 +80,8 @@ export const ModalPet = ({
       userId: user.id,
       feed: {},
     };
-    console.log(newPet);
     registerPets(newPet as Pets, accessToken);
+    onClose();
   };
 
   const handleEdit = ({ nome, specie, age, img_url }: FormEditData) => {
@@ -94,10 +94,7 @@ export const ModalPet = ({
       feed: {},
     };
     editPets(newPet as Pets, petId, accessToken);
-  };
-
-  const handleDelete = (id: number) => {
-    removePets(id, accessToken);
+    onClose();
   };
   return (
     <>
@@ -146,11 +143,7 @@ export const ModalPet = ({
             <Button type="submit">Confirmar</Button>
           </ModalBody>
 
-          <ModalFooter>
-            {!isNew && (
-              <Button onClick={() => handleDelete(petId)}>Deletar</Button>
-            )}
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>

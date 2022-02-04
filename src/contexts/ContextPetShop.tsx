@@ -25,7 +25,11 @@ interface PetShop {
 }
 interface PetShopProviderData {
   petShop: PetShop[];
-  getPetShop: (accesToken: string) => Promise<void>;
+  getPetShop: (
+    userId: number,
+    idPet: number,
+    accesToken: string
+  ) => Promise<void>;
   registerPetShop: (data: PetShop, accessToken: string) => Promise<void>;
   editPetShop: (
     data: PetShop,
@@ -49,14 +53,17 @@ const usePetShop = () => {
 const PetShopProvider = ({ children }: PetShopProviderProps) => {
   const [petShop, setPetShop] = useState<PetShop[]>([]);
 
-  const getPetShop = useCallback(async (accessToken: string) => {
-    await api
-      .get("/petShops", {
-        headers: { authorization: `Bearer ${accessToken}` },
-      })
-      .then((response) => setPetShop(response.data))
-      .catch((err) => console.log("getPetShop function error", err));
-  }, []);
+  const getPetShop = useCallback(
+    async (userId: number, idPet: number, accessToken: string) => {
+      await api
+        .get(`/users/${userId}/petshops?idPet=${idPet}`, {
+          headers: { authorization: `Bearer ${accessToken}` },
+        })
+        .then((response) => setPetShop(response.data))
+        .catch((err) => console.log("getPetShop function error", err));
+    },
+    []
+  );
 
   const registerPetShop = useCallback(
     async (data: PetShop, accessToken: string) => {

@@ -34,7 +34,7 @@ export const CardPetshop = ({
   closePetShop,
 }: PetShopProps) => {
   const { petShop, getPetShop } = usePetShop();
-  const { accessToken } = useAuth();
+  const { user, accessToken } = useAuth();
   const { pets } = usePets();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [petShopId, setPetShopId] = useState(0);
@@ -45,7 +45,7 @@ export const CardPetshop = ({
   const selectedPetShop = petShop.filter((item) => item.idPet === petId);
 
   useEffect(() => {
-    getPetShop(accessToken);
+    getPetShop(user.id, petId, accessToken);
   });
 
   const handle = (id: number, state: boolean) => {

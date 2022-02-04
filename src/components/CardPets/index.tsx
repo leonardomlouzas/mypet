@@ -39,7 +39,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
 
   useEffect(() => {
     getPets(accessToken, user.id);
-  }, []);
+  }, [isOpen]);
 
   return (
     <Box
@@ -64,6 +64,8 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
           mt={mobile ? "" : "25px"}
           w="100%"
           minH="400px"
+          flexWrap="wrap"
+          gap="15px"
         >
           {selected.map((item, index) => (
             <Flex
@@ -124,7 +126,7 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               </Box>
             </Flex>
           ))}
-          {selected ? (
+          {mobile ? (
             pets.length === 0 ? (
               <>
                 <Flex w="100vw" h="100%" bg="gray.200" justify="center">
@@ -139,12 +141,16 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
               <></>
             )
           ) : (
+            <></>
+          )}
+          {!mobile && (
             <Flex
+              w="100%"
               direction="column"
               align="center"
               justify="center"
               p="8"
-              _hover={{ cursor: "pointer", transform: "scale(1.5)" }}
+              _hover={{ cursor: "pointer", textDecoration: "underline" }}
               onClick={onOpen}
             >
               <Image
@@ -154,9 +160,9 @@ export const CardPets = ({ mobile, open }: CardPetProps) => {
                 h="50px"
                 color="yellow.300"
               />
-              {pets.length === 0 ?? (
-                <Text fontWeight="bold">Adicione seu amigo</Text>
-              )}
+              <Text fontWeight="bold" align="center">
+                Adicione seu amigo
+              </Text>
             </Flex>
           )}
         </Flex>
